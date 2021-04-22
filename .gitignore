@@ -1,4 +1,12 @@
 cmake-build-debug
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+
 .idea
 lib/build
 out
+cmake-configure.sh
+buildNRun.sh
+.replit
