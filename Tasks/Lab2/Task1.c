@@ -128,7 +128,7 @@ int main() {
 int *createAgeArray(int noOfStudents) {
 	int *pAges = (int *) malloc(sizeof(int) * noOfStudents);
 	for (int i = 0; i < noOfStudents; i++) {
-		printf("\nEnter the age of student %d: ", i);
+		printf("Enter the age of student %d: ", i);
 		scanf("%d", &pAges[i]);
 	}
 	return pAges;
