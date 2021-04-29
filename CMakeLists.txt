@@ -30,4 +30,6 @@ add_executable(L1T2 Tasks/Lab1/Task2.c)
 add_executable(L1T3 Tasks/Lab1/Task3.c)
 add_executable(L1T4 Tasks/Lab1/Task4.c)
 
+add_executable(L2T1 Tasks/Lab2/Task1.c)
+
 add_executable(Main main.c)
