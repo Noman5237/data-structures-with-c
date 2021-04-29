@@ -114,7 +114,7 @@ int main() {
 	scanf("%d", &tempInt);
 	ageIndex = getElementIndex(ageOccurrences[0], tempInt, noOfUniqueAges);
 	printf("Occurrences of age %d: %d\n", tempInt, ageIndex > -1 ? ageOccurrences[1][ageIndex] : 0);
-	
+
 //	Freeing the allocated memory by arrays
 	
 	free(pAges);
@@ -128,7 +128,7 @@ int main() {
 int *createAgeArray(int noOfStudents) {
 	int *pAges = (int *) malloc(sizeof(int) * noOfStudents);
 	for (int i = 0; i < noOfStudents; i++) {
-		printf("\nEnter the age of student %d: ", i);
+		printf("Enter the age of student %d: ", i);
 		scanf("%d", &pAges[i]);
 	}
 	return pAges;
@@ -183,43 +183,43 @@ int getElementIndex(int *pArray, int requiredElement, int lengthOfArray) {
 }
 
 int countNoOfUniqueElements(int *pArray, int lengthOfArray) {
-	int noOfUniqueAges = 1;
-	int currentAge = pArray[0];
+	int noOfUniqueElements = 1;
+	int currentElement = pArray[0];
 	for (int i = 1; i < lengthOfArray; i++) {
-		if (pArray[i] != currentAge) {
-			noOfUniqueAges++;
-			currentAge = pArray[i];
+		if (pArray[i] != currentElement) {
+			noOfUniqueElements++;
+			currentElement = pArray[i];
 		}
 	}
 	
-	return noOfUniqueAges;
+	return noOfUniqueElements;
 }
 
 int **calculateElementOccurrences(int *pArray, int lengthOfArray) {
 	
-	int noOfUniqueAges = countNoOfUniqueElements(pArray, lengthOfArray);
+	int noOfUniqueElements = countNoOfUniqueElements(pArray, lengthOfArray);
 	
-	int **ageOccurrences = malloc(sizeof(int *) * 2);
-	ageOccurrences[0] = malloc(sizeof(int) * noOfUniqueAges);
-	ageOccurrences[1] = malloc(sizeof(int) * noOfUniqueAges);
+	int **occurrences = malloc(sizeof(int *) * 2);
+	occurrences[0] = malloc(sizeof(int) * noOfUniqueElements);
+	occurrences[1] = malloc(sizeof(int) * noOfUniqueElements);
 	
-	int currentAge = pArray[0];
-	int currentAgeOccurrences = 1;
+	int currentElement = pArray[0];
+	int currentElementOccurrences = 1;
 	int n = 0;
 	for (int i = 1; i < lengthOfArray; i++) {
-		if (pArray[i] != currentAge) {
-			ageOccurrences[0][n] = currentAge;
-			ageOccurrences[1][n] = currentAgeOccurrences;
-			currentAgeOccurrences = 1;
+		if (pArray[i] != currentElement) {
+			occurrences[0][n] = currentElement;
+			occurrences[1][n] = currentElementOccurrences;
+			currentElementOccurrences = 1;
 			n++;
-			currentAge = pArray[i];
+			currentElement = pArray[i];
 		} else {
-			currentAgeOccurrences++;
+			currentElementOccurrences++;
 		}
 	}
 	
-	ageOccurrences[0][n] = currentAge;
-	ageOccurrences[1][n] = currentAgeOccurrences;
+	occurrences[0][n] = currentElement;
+	occurrences[1][n] = currentElementOccurrences;
 	
-	return ageOccurrences;
+	return occurrences;
 }
