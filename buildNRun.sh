@@ -1,4 +1,4 @@
-echo -n "\nPlease enter the Lab and Task ID (format: LnTn): "
+echo -n "\nPlease enter the Lab and Task ID (format: L(T?)nTn): "
 read taskId
 echo "\n================ BUILDING $taskId ================"
 cmake --build . --target $taskId -- -j 9
