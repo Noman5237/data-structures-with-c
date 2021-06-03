@@ -35,6 +35,21 @@ add_executable(L2T1 Tasks/Lab2/Task1.c)
 add_executable(LT1T1 Tasks/LabTest1/Task1.c)
 add_executable(LT1T2 Tasks/LabTest1/Task2.c)
 
-add_executable(L3T1 Tasks/Lab3/Task1.c)
+add_executable(L4T1 Tasks/Lab4/Task1.c)
+
+add_executable(L5T1 Tasks/Lab5/Task1.c)
+
+# needs to be moved to lib
+
+add_library(dll Tasks/Lab6/doubleLinkedList.c)
+
+add_executable(L6T1 Tasks/Lab6/Task1.c)
+target_link_libraries(L6T1 dll)
+
+add_executable(L6T2 Tasks/Lab6/Task2.c)
+target_link_libraries(L6T2 dll)
+
+add_executable(L6T3 Tasks/Lab6/Task3.c)
+target_link_libraries(L6T3 dll)
 
 add_executable(Main main.c)
