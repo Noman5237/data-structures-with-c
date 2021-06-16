@@ -9,7 +9,6 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pedantic -Wall")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/build/${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/shared)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/build/${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/archive)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/out/${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE})
-set(CMAKE_PROJECT_DATABASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/resources/database)
 
 message("# ---------------- PATHS ---------------- #")
 message("src:                   ${CMAKE_CURRENT_SOURCE_DIR}")
@@ -17,12 +16,14 @@ message("bin:                   ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
 message("shared lib dir:        ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ")
 message("static lib dir:        ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
 message("static lib dir:        ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
-message("database dir  :        ${CMAKE_PROJECT_DATABASE_DIRECTORY}")
 
 # ================================================== INCLUDES ================================================== #
 
 # ---------------- Library Headers ---------------- #
 include_directories(lib/include)
+
+# ================================================== RESOURCES ================================================== #
+add_compile_definitions(RESOURCES_DIR=${})
 
 # ---------------- TASKS ---------------- #
 add_executable(L1T1 Tasks/Lab1/Task1.c)
@@ -51,5 +52,17 @@ target_link_libraries(L6T2 dll)
 
 add_executable(L6T3 Tasks/Lab6/Task3.c)
 target_link_libraries(L6T3 dll)
+
+add_library(ltdll Tasks/LabTest2/doubleLinkedList.c)
+
+add_executable(LT2T1_1 Tasks/LabTest2/Task1_1.c)
+target_link_libraries(LT2T1_1 ltdll)
+
+add_executable(LT2T1_2 Tasks/LabTest2/Task1_2.c)
+target_link_libraries(LT2T1_2 ltdll)
+
+add_executable(LT2TC_2 Tasks/LabTest2/TaskC_1.c Tasks/LabTest2/TaskC_2.c)
+
+add_executable(Quiz1 Tasks/Quiz/Quiz1.c)
 
 add_executable(Main main.c)

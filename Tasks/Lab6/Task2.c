@@ -16,19 +16,19 @@ Stack *stack_create() {
 }
 
 void stack_push(int data, Stack *stack) {
-	insertAtEnd(createNode(data), stack);
+	list_insertAtEnd(node_create(data), stack);
 }
 
 void stack_pop(Stack *stack) {
-	removeFromEnd(stack);
+	list_removeFromEnd(stack);
 }
 
 void stack_display(Stack *stack) {
-	forward(stack);
+	list_forward(stack);
 }
 
 void stack_free(Stack *stack) {
-	while (!isEmpty(stack)) {
+	while (!list_isEmpty(stack)) {
 		stack_pop(stack);
 	}
 	free(stack);

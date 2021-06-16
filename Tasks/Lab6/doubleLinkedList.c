@@ -22,7 +22,7 @@ struct List {
 
 typedef struct List List;
 
-Node *createNode(int data) {
+Node *node_create(int data) {
 	//Declare a pointer to hold the address of a node
 	Node *node;
 	
@@ -37,15 +37,15 @@ Node *createNode(int data) {
 }
 
 
-int isEmpty(List *list) {
+int list_isEmpty(List *list) {
 	return list->firstnode == NULL;
 }
 
 //Traverse the list in forward direction and print the data
-void forward(List *list) {
+void list_forward(List *list) {
 	printf("\n");
 	
-	if (isEmpty(list)) {
+	if (list_isEmpty(list)) {
 		printf("empty list\n");
 		return;
 	}
@@ -60,10 +60,10 @@ void forward(List *list) {
 }
 
 //Traverse the list in backward direction and print the data
-void backward(List *list) {
+void list_backword(List *list) {
 	printf("\n");
 	
-	if (isEmpty(list)) {
+	if (list_isEmpty(list)) {
 		printf("empty list\n");
 		return;
 	}
@@ -78,7 +78,7 @@ void backward(List *list) {
 }
 
 // Insert the "newnode" before the "node" in the provided "list"
-void insertBefore(Node *newnode, Node *node, List *list) {
+void list_insertBefore(Node *newnode, Node *node, List *list) {
 	newnode->prev = node->prev;
 	newnode->next = node;
 	
@@ -93,7 +93,7 @@ void insertBefore(Node *newnode, Node *node, List *list) {
 }
 
 //Insert the "newnode" after the "node" in th "list"
-void insertAfter(Node *newnode, Node *node, List *list) {
+void list_insertAfter(Node *newnode, Node *node, List *list) {
 	newnode->prev = node;
 	newnode->next = node->next;
 	
@@ -108,29 +108,29 @@ void insertAfter(Node *newnode, Node *node, List *list) {
 }
 
 // Insert the "newnode" at the beginning of the list
-void insertAtFront(Node *newnode, List *list) {
+void list_insertAtFront(Node *newnode, List *list) {
 	if (list->firstnode == NULL) {
 		list->firstnode = newnode;
 		list->lastnode = newnode;
 	} else {
-		insertBefore(newnode, list->firstnode, list);
+		list_insertBefore(newnode, list->firstnode, list);
 	}
 }
 
 // Insert the "newnode" at the end of the "list"
-void insertAtEnd(Node *newnode, List *list) {
+void list_insertAtEnd(Node *newnode, List *list) {
 	if (list->lastnode == NULL) {
 		list->lastnode = newnode;
 		list->firstnode = newnode;
 	} else {
-		insertAfter(newnode, list->lastnode, list);
+		list_insertAfter(newnode, list->lastnode, list);
 	}
 	
 }
 
-void removeNode(Node *node, List *list) {
+void list_removeNode(Node *node, List *list) {
 	
-	if (isEmpty(list)) {
+	if (list_isEmpty(list)) {
 		printf("Cannot remove node from empty list\n");
 		return;
 	}
@@ -150,20 +150,20 @@ void removeNode(Node *node, List *list) {
 	free(node);
 }
 
-void removeFromFront(List *list) {
-	removeNode(list->firstnode, list);
+void list_removeFromFront(List *list) {
+	list_removeNode(list->firstnode, list);
 }
 
-void removeFromEnd(List *list) {
-	removeNode(list->lastnode, list);
+void list_removeFromEnd(List *list) {
+	list_removeNode(list->lastnode, list);
 }
 
 // Removes a node from a certain location of the list. (0 based indexing)
-void removeAt(int index, List *list) {
+void list_removeAt(int index, List *list) {
 	Node *current = list->firstnode;
 	for (int i = 0; i < index; i++) {
 		current = current->next;
 	}
 	
-	removeNode(current, list);
+	list_removeNode(current, list);
 }

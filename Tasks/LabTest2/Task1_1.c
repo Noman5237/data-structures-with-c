@@ -1,18 +1,15 @@
 /**
- * @file: Task3.c
+ * @file: Task1.c
  * @author: Anonyman637
- * @date: 6/3/2021; 2:53 PM
+ * @date: 6/10/2021; 3:47 PM
  */
-
+ 
 #include "doubleLinkedList.c"
 
 typedef struct List Queue;
 
 Queue *queue_create() {
-	Queue *queue = malloc(sizeof(Queue));
-	queue->firstnode = NULL;
-	queue->lastnode = NULL;
-	return queue;
+	return list_create();
 }
 
 void queue_enqueue(int data, Queue *queue) {
@@ -28,10 +25,7 @@ void queue_display(Queue *stack) {
 }
 
 void queue_free(Queue *queue) {
-	while (!list_isEmpty(queue)) {
-		queue_dequeue(queue);
-	}
-	free(queue);
+	list_free(queue);
 }
 
 int main() {

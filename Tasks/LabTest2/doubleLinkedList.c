@@ -1,5 +1,5 @@
 /**
- * @file: Task1.c
+ * @file: doubleLinkedList.c
  * @author: Anonyman637
  * @date: 5/27/2021; 2:29 PM
  */
@@ -22,6 +22,13 @@ struct List {
 
 typedef struct List List;
 
+List *list_create() {
+	List *list = malloc(sizeof(List));
+	list->firstnode = NULL;
+	list->lastnode = NULL;
+	return list;
+}
+
 Node *node_create(int data) {
 	//Declare a pointer to hold the address of a node
 	Node *node;
@@ -36,15 +43,21 @@ Node *node_create(int data) {
 	return node;
 }
 
+
+int list_isEmpty(List *list) {
+	return list->firstnode == NULL;
+}
+
 //Traverse the list in forward direction and print the data
 void list_forward(List *list) {
 	printf("\n");
 	
-	Node *currentHead = list->firstnode;
-	if (currentHead == NULL) {
+	if (list_isEmpty(list)) {
 		printf("empty list\n");
 		return;
 	}
+	
+	Node *currentHead = list->firstnode;
 	while (currentHead != NULL) {
 		printf("%d ", currentHead->data);
 		currentHead = currentHead->next;
@@ -57,12 +70,12 @@ void list_forward(List *list) {
 void list_backword(List *list) {
 	printf("\n");
 	
-	Node *currentTail = list->lastnode;
-	if (currentTail == NULL) {
+	if (list_isEmpty(list)) {
 		printf("empty list\n");
 		return;
 	}
 	
+	Node *currentTail = list->lastnode;
 	while (currentTail != NULL) {
 		printf("%d ", currentTail->data);
 		currentTail = currentTail->prev;
@@ -122,6 +135,36 @@ void list_insertAtEnd(Node *newnode, List *list) {
 	
 }
 
+void list_removeNode(Node *node, List *list) {
+	
+	if (list_isEmpty(list)) {
+		printf("Cannot remove node from empty list\n");
+		return;
+	}
+	
+	if (node->prev != NULL) {
+		node->prev->next = node->next;
+	} else {
+		list->firstnode = node->next;
+	}
+	
+	if (node->next != NULL) {
+		node->next->prev = node->prev;
+	} else {
+		list->lastnode = node->prev;
+	}
+	
+	free(node);
+}
+
+void list_removeFromFront(List *list) {
+	list_removeNode(list->firstnode, list);
+}
+
+void list_removeFromEnd(List *list) {
+	list_removeNode(list->lastnode, list);
+}
+
 // Removes a node from a certain location of the list. (0 based indexing)
 void list_removeAt(int index, List *list) {
 	Node *current = list->firstnode;
@@ -129,61 +172,12 @@ void list_removeAt(int index, List *list) {
 		current = current->next;
 	}
 	
-	if (current->prev != NULL) {
-		current->prev->next = current->next;
-	} else {
-		list->firstnode = current->next;
-	}
-	
-	if (current->next != NULL) {
-		current->next->prev = current->prev;
-	} else {
-		list->lastnode = current->prev;
-	}
-	
-	free(current);
+	list_removeNode(current, list);
 }
 
-int main() {
-	Node *newNode;
-	int n, i;
-	List list;
-	list.firstnode = NULL;
-	list.lastnode = NULL;
-	
-	
-	newNode = node_create(1);
-	list_insertAtFront(newNode, &list);
-	newNode = node_create(2);
-	list_insertAtFront(newNode, &list);
-	newNode = node_create(3);
-	list_insertBefore(newNode, list.lastnode, &list);
-	newNode = node_create(4);
-	list_insertAfter(newNode, list.lastnode, &list);
-	newNode = node_create(5);
-	list_insertAfter(newNode, list.firstnode, &list);
-	newNode = node_create(6);
-	list_insertAtEnd(newNode, &list);
-	
-	list_forward(&list);
-	list_backword(&list);
-	
-	list_removeAt(2, &list);
-	list_forward(&list);
-	
-	list_removeAt(4, &list);
-	list_forward(&list);
-	
-	list_removeAt(0, &list);
-	list_forward(&list);
-	
-	list_removeAt(0, &list);
-	list_removeAt(0, &list);
-	list_forward(&list);
-	
-	list_removeAt(0, &list);
-	list_forward(&list);
-	
-	printf("done");
-	return 0;
+void list_free(List *list) {
+	while (!list_isEmpty(list)) {
+		list_removeFromFront(list);
+	}
+	free(list);
 }

@@ -4,7 +4,7 @@
  * @date: 6/3/2021; 2:53 PM
  */
 
-#include "./doubleLinkedList.c"
+#include "doubleLinkedList.c"
 
 int main() {
 	Node *newNode;
@@ -12,39 +12,39 @@ int main() {
 	list.firstnode = NULL;
 	list.lastnode = NULL;
 	
-	newNode = createNode(1);
-	insertAtFront(newNode, &list);
-	newNode = createNode(2);
-	insertAtFront(newNode, &list);
-	newNode = createNode(3);
-	insertBefore(newNode, list.lastnode, &list);
-	newNode = createNode(4);
-	insertAfter(newNode, list.lastnode, &list);
-	newNode = createNode(5);
-	insertAfter(newNode, list.firstnode, &list);
-	newNode = createNode(6);
-	insertAtEnd(newNode, &list);
+	newNode = node_create(1);
+	list_insertAtFront(newNode, &list);
+	newNode = node_create(2);
+	list_insertAtFront(newNode, &list);
+	newNode = node_create(3);
+	list_insertBefore(newNode, list.lastnode, &list);
+	newNode = node_create(4);
+	list_insertAfter(newNode, list.lastnode, &list);
+	newNode = node_create(5);
+	list_insertAfter(newNode, list.firstnode, &list);
+	newNode = node_create(6);
+	list_insertAtEnd(newNode, &list);
 	
-	forward(&list);
-	backward(&list);
+	list_forward(&list);
+	list_backword(&list);
 	
-	removeAt(2, &list);
-	forward(&list);
+	list_removeAt(2, &list);
+	list_forward(&list);
 	
-	removeAt(4, &list);
-	forward(&list);
+	list_removeAt(4, &list);
+	list_forward(&list);
 	
-	removeAt(0, &list);
-	forward(&list);
+	list_removeAt(0, &list);
+	list_forward(&list);
 	
-	removeAt(2, &list);
-	forward(&list);
+	list_removeAt(2, &list);
+	list_forward(&list);
 	
-	removeFromEnd(&list);
-	forward(&list);
+	list_removeFromEnd(&list);
+	list_forward(&list);
 	
-	removeFromFront(&list);
-	forward(&list);
+	list_removeFromFront(&list);
+	list_forward(&list);
 	
 	printf("done");
 	return 0;
