@@ -4,13 +4,13 @@
  * @date: 6/10/2021; 3:42 PM
  */
 
-#include "doubleLinkedList.c"
+#include <doublyLinkedList.h>
 
-int countNoOfElementsGreaterThan(int threshold, List *list) {
+int countNoOfElementsGreaterThan(int threshold, DLL *list) {
 	int count = 0;
 	int noOfOperations = 0;
 	
-	Node *currentHead = list->firstnode;
+	DLL_Node *currentHead = list->firstnode;
 	++noOfOperations;
 	
 	while (currentHead != NULL) {
@@ -33,19 +33,19 @@ int countNoOfElementsGreaterThan(int threshold, List *list) {
 }
 
 int main() {
-	List *list = list_create();
+	DLL *list = dll_create();
 	
 	int tini;
 	
 	printf("Enter a number into the list (q to stop): ");
 	while (scanf("%d", &tini)) {
-		list_insertAtFront(node_create(tini), list);
+		dll_insertAtFront(dll_node_create(tini), list);
 		printf("Enter a number into the list (q to stop): ");
 	}
 	scanf("q");
 	
 	printf("Provided List: ");
-	list_backword(list);
+	dll_backward(list);
 	
 	// counting the number of elements greater than n
 	
@@ -55,7 +55,7 @@ int main() {
 	int noOfItemsGreaterThanThreshold = countNoOfElementsGreaterThan(tini, list);
 	printf("No of items in the list greater than %d is %d\n", tini, noOfItemsGreaterThanThreshold);
 	
-	list_free(list);
+	dll_free(list);
 	
 	return 0;
 }

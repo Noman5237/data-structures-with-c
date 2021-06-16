@@ -4,9 +4,9 @@
  * @date: 6/3/2021; 2:53 PM
  */
 
-#include "./doubleLinkedList.c"
+#include <doublyLinkedList.h>
 
-typedef struct List Stack;
+typedef DLL Stack;
 
 Stack *stack_create() {
 	Stack *stack = malloc(sizeof(Stack));
@@ -16,19 +16,19 @@ Stack *stack_create() {
 }
 
 void stack_push(int data, Stack *stack) {
-	list_insertAtEnd(node_create(data), stack);
+	dll_insertAtEnd(dll_node_create(data), stack);
 }
 
 void stack_pop(Stack *stack) {
-	list_removeFromEnd(stack);
+	dll_removeFromEnd(stack);
 }
 
 void stack_display(Stack *stack) {
-	list_forward(stack);
+	dll_forward(stack);
 }
 
 void stack_free(Stack *stack) {
-	while (!list_isEmpty(stack)) {
+	while (!dll_isEmpty(stack)) {
 		stack_pop(stack);
 	}
 	free(stack);
