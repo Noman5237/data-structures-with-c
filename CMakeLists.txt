@@ -29,6 +29,7 @@ add_compile_definitions(RESOURCES_DIR=${})
 add_library(dll lib/src/doublyLinkedList.c)
 add_library(dllstack lib/src/dllStack.c)
 add_library(dllqueue lib/src/dllQueue.c)
+add_library(bst lib/src/binarySearchTree.c)
 
 # ================================================== TASKS ================================================== #
 add_executable(L1T1 Tasks/Lab1/Task1.c)
