@@ -9,17 +9,17 @@
 int main() {
 	BST *tree = bst_create();
 	
-	tree->root = bst_recursiveInsertNode(bst_node_create(5), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(1), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(7), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(8), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(7), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(1), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(5), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(4), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(3), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(0), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(10), tree->root);
+	bst_insertNode(bst_node_create(5), tree);
+	bst_insertNode(bst_node_create(1), tree);
+	bst_insertNode(bst_node_create(7), tree);
+	bst_insertNode(bst_node_create(8), tree);
+	bst_insertNode(bst_node_create(7), tree);
+	bst_insertNode(bst_node_create(1), tree);
+	bst_insertNode(bst_node_create(5), tree);
+	bst_insertNode(bst_node_create(4), tree);
+	bst_insertNode(bst_node_create(3), tree);
+	bst_insertNode(bst_node_create(0), tree);
+	bst_insertNode(bst_node_create(10), tree);
 	
 	bst_recursiveInOrderTraversal(tree->root);
 	printf("\n");

@@ -158,7 +158,28 @@ void bst_recursiveFree(BST_Node *root) {
 /* ============================== ITERATIVE ========================= */
 
 void bst_insertNode(BST_Node *newNode, BST *tree) {
-
+	if (tree->root == NULL) {
+		tree->root = newNode;
+		return;
+	}
+	
+	BST_Node *parent = tree->root;
+	while (true) {
+		if (parent->leftChild != NULL && newNode->data < parent->data) {
+			parent = parent->leftChild;
+		} else if (parent->rightChild != NULL && newNode->data >= parent->data) {
+			parent = parent->rightChild;
+		} else {
+			break;
+		}
+	}
+	
+	newNode->parent = parent;
+	if (newNode->data < parent->data) {
+		parent->leftChild = newNode;
+	} else {
+		parent->rightChild = newNode;
+	}
 }
 
 void bst_preOrderTraversal(BST *root) {
