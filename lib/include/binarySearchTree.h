@@ -65,16 +65,20 @@ void bst_postOrderTraversal(BST *tree);
 
 BST_Node *bst_search(int data, BST *tree);
 
-BST_Node *bst_maximum(BST *tree);
+BST_Node *bst_maximum(BST_Node *root);
 
-BST_Node *bst_minimum(BST *tree);
+BST_Node *bst_minimum(BST_Node *root);
 
-BST_Node *bst_InOrderPredecessor(BST *tree);
+BST_Node *bst_InOrderPredecessor(BST_Node *node);
 
-BST_Node *bst_InOrderSuccessor(BST *tree);
+BST_Node *bst_InOrderSuccessor(BST_Node *node);
 
 void bst_deleteNode(BST_Node *node, BST *tree);
 
 void bst_free(BST *tree);
+
+/* ============================== UTILITY ========================= */
+
+void bst_transplantNode(BST_Node *transplanter, BST_Node *node, BST *tree);
 
 #endif //DATASTRUCTURESCOURSE_BINARYSEARCHTREE_H
