@@ -23,7 +23,6 @@ message("static lib dir:        ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
 include_directories(lib/include)
 
 # ================================================== RESOURCES ================================================== #
-add_compile_definitions(RESOURCES_DIR=${})
 
 # ================================================== LIBRARIES ================================================== #
 add_library(dll lib/src/doublyLinkedList.c)
