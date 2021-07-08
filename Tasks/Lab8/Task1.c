@@ -9,24 +9,47 @@
 int main() {
 	BST *tree = bst_create();
 	
-	tree->root = bst_recursiveInsertNode(bst_node_create(5), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(1), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(7), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(8), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(7), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(1), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(5), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(4), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(3), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(0), tree->root);
-	tree->root = bst_recursiveInsertNode(bst_node_create(10), tree->root);
+	bst_insertNode(bst_node_create(5), tree);
+	bst_insertNode(bst_node_create(1), tree);
+	bst_insertNode(bst_node_create(7), tree);
+	bst_insertNode(bst_node_create(8), tree);
+	bst_insertNode(bst_node_create(7), tree);
+	bst_insertNode(bst_node_create(1), tree);
+	bst_insertNode(bst_node_create(5), tree);
+	bst_insertNode(bst_node_create(4), tree);
+	bst_insertNode(bst_node_create(3), tree);
+	bst_insertNode(bst_node_create(0), tree);
+	bst_insertNode(bst_node_create(10), tree);
 	
+	printf("Inorder traversal\n");
 	bst_recursiveInOrderTraversal(tree->root);
 	printf("\n");
 	
-	bst_deleteNode(tree->root, tree);
-	bst_deleteNode(bst_search(4, tree), tree);
+	printf("Preorder traversal\n");
+	bst_recursivePreOrderTraversal(tree->root);
+	printf("\n");
 	
+	printf("Postorder traversal\n");
+	bst_recursivePostOrderTraversal(tree->root);
+	printf("\n");
+	
+	printf("Deleting tree root\n");
+	bst_deleteNode(tree->root, tree);
+	bst_recursiveInOrderTraversal(tree->root);
+	printf("\n");
+	
+	printf("Deleting 4 from tree\n");
+	bst_deleteNode(bst_search(4, tree), tree);
+	bst_recursiveInOrderTraversal(tree->root);
+	printf("\n");
+	
+	printf("Deleting max element from tree root\n");
+	bst_deleteNode(bst_maximum(tree->root), tree);
+	bst_recursiveInOrderTraversal(tree->root);
+	printf("\n");
+	
+	printf("Deleting min element from tree root\n");
+	bst_deleteNode(bst_minimum(tree->root), tree);
 	bst_recursiveInOrderTraversal(tree->root);
 	printf("\n");
 	
