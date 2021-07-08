@@ -1,18 +1,15 @@
 /**
- * @file: Task3.c
+ * @file: Task1.c
  * @author: Anonyman637
- * @date: 6/3/2021; 2:53 PM
+ * @date: 6/10/2021; 3:47 PM
  */
-
+ 
 #include <doublyLinkedList.h>
 
 typedef DLL Queue;
 
 Queue *queue_create() {
-	Queue *queue = malloc(sizeof(Queue));
-	queue->firstnode = NULL;
-	queue->lastnode = NULL;
-	return queue;
+	return dll_create();
 }
 
 void queue_enqueue(int data, Queue *queue) {
@@ -28,10 +25,7 @@ void queue_display(Queue *stack) {
 }
 
 void queue_free(Queue *queue) {
-	while (!dll_isEmpty(queue)) {
-		queue_dequeue(queue);
-	}
-	free(queue);
+	dll_free(queue);
 }
 
 int main() {
