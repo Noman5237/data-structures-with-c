@@ -234,14 +234,20 @@ void bst_deleteNode(BST_Node *node, BST *tree) {
 	} else if (node->rightChild == NULL) {
 		bst_transplantNode(node->leftChild, node, tree);
 	} else {
-		BST_Node *nodeRightMinimum = bst_minimum(node->rightChild);
-		if (node != nodeRightMinimum->parent) {
-			nodeRightMinimum->parent->leftChild = nodeRightMinimum->rightChild;
-			nodeRightMinimum->rightChild->parent = nodeRightMinimum->parent;
-		} else {
+		BST_Node *nodeLocalSuccessor = bst_minimum(node->rightChild);
 		
+		if (nodeLocalSuccessor->parent != node) {
+			// If the local successor is the right child of node
+			// then the following lines do not have any effect on deleting on
+			// and we can skip this lines and replace node with its right child directly
+			bst_transplantNode(nodeLocalSuccessor->rightChild, nodeLocalSuccessor, tree);
+			nodeLocalSuccessor->rightChild = node->rightChild;
+			node->rightChild->parent = nodeLocalSuccessor;
 		}
 		
+		bst_transplantNode(nodeLocalSuccessor, node, tree);
+		nodeLocalSuccessor->leftChild = node->leftChild;
+		node->leftChild->parent = nodeLocalSuccessor;
 	}
 	
 	free(node);
@@ -276,7 +282,9 @@ void bst_free(BST *tree) {
 /* ============================== UTILITY ========================= */
 
 void bst_transplantNode(BST_Node *transplanter, BST_Node *node, BST *tree) {
-	if (node == node->parent->leftChild) {
+	if (node->parent == NULL) {
+		tree->root = transplanter;
+	} else if (node == node->parent->leftChild) {
 		node->parent->leftChild = transplanter;
 	} else {
 		node->parent->rightChild = transplanter;
@@ -285,9 +293,4 @@ void bst_transplantNode(BST_Node *transplanter, BST_Node *node, BST *tree) {
 	if (transplanter != NULL) {
 		transplanter->parent = node->parent;
 	}
-	
-	if (node->parent == NULL) {
-		tree->root = transplanter;
-	}
-	
 }

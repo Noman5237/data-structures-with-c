@@ -53,6 +53,9 @@ target_link_libraries(L6T2 dll)
 add_executable(L6T3 Tasks/Lab6/Task3.c)
 target_link_libraries(L6T3 dll)
 
+add_executable(L8T1 Tasks/Lab8/Task1.c)
+target_link_libraries(L8T1 bst)
+
 add_executable(LT2T1_1 Tasks/LabTest2/Task1_1.c)
 target_link_libraries(LT2T1_1 dll)
 add_executable(LT2T1_2 Tasks/LabTest2/Task1_2.c)
