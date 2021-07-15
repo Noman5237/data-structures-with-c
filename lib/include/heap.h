@@ -12,7 +12,7 @@
 typedef struct Heap {
 	int capacity;
 	int size;
-	int *datum;
+	int *data;
 	int defaultValue;
 	
 	int (*compare)(int a, int b);
@@ -20,9 +20,9 @@ typedef struct Heap {
 
 Heap *heap_create(int capacity, int defaultValue, int (*comparer)(int a, int b));
 
-Heap *heap_createFromArray(int *datum, int size, int defaultValue, int (*comparer)(int a, int b));
+Heap *heap_createFromArray(int *data, int size, int defaultValue, int (*comparer)(int a, int b));
 
-void heap_push(int data, Heap *heap);
+void heap_push(int datum, Heap *heap);
 
 int heap_resize(int newCapacity, Heap *heap);
 
@@ -34,7 +34,7 @@ int heap_isValidIndex(int index, Heap *heap);
 
 int heap_get(int index, Heap *heap);
 
-void heap_set(int data, int index, Heap *heap);
+void heap_set(int datum, int index, Heap *heap);
 
 void heap_swapData(int indexA, int indexB, Heap *heap);
 

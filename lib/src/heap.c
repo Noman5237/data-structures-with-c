@@ -10,7 +10,7 @@ Heap *heap_create(int capacity, int defaultValue, int (*comparer)(int a, int b))
 	Heap *heap = malloc(sizeof(Heap));
 	heap->capacity = capacity;
 	heap->size = 0;
-	heap->datum = NULL;
+	heap->data = NULL;
 	heap->defaultValue = defaultValue;
 	heap->compare = comparer;
 	
@@ -19,23 +19,23 @@ Heap *heap_create(int capacity, int defaultValue, int (*comparer)(int a, int b))
 	return heap;
 }
 
-Heap *heap_createFromArray(int *datum, int size, int defaultValue, int (*comparer)(int a, int b)) {
+Heap *heap_createFromArray(int *data, int size, int defaultValue, int (*comparer)(int a, int b)) {
 	Heap *heap = heap_create(size, defaultValue, comparer);
 	
-	memcpy(heap->datum, datum, sizeof(int) * size / sizeof(char));
+	memcpy(heap->data, data, sizeof(int) * size / sizeof(char));
 	heap->size = size;
 	heap_heapify(heap);
 	
 	return heap;
 }
 
-void heap_push(int data, Heap *heap) {
+void heap_push(int datum, Heap *heap) {
 	if (heap_isFull(heap) && !heap_resize(heap->capacity * 2, heap)) {
 		return;
 	}
 	
 	++heap->size;
-	heap_set(data, heap->size - 1, heap);
+	heap_set(datum, heap->size - 1, heap);
 	
 	heap__heapifyUp(heap);
 }
@@ -46,12 +46,12 @@ int heap_resize(int newCapacity, Heap *heap) {
 		return false;
 	}
 	
-	if (heap->datum) {
-		memcpy(newDatum, heap->datum, sizeof(int) * heap->capacity / sizeof(char));
-		free(heap->datum);
+	if (heap->data) {
+		memcpy(newDatum, heap->data, sizeof(int) * heap->capacity / sizeof(char));
+		free(heap->data);
 	}
 	
-	heap->datum = newDatum;
+	heap->data = newDatum;
 	heap->capacity = newCapacity;
 	
 	return true;
@@ -70,15 +70,15 @@ int heap_isValidIndex(int index, Heap *heap) {
 }
 
 int heap_get(int index, Heap *heap) {
-	return heap->datum[index];
+	return heap->data[index];
 }
 
-void heap_set(int data, int index, Heap *heap) {
+void heap_set(int datum, int index, Heap *heap) {
 	if (!heap_isValidIndex(index, heap)) {
 		return;
 	}
 	
-	heap->datum[index] = data;
+	heap->data[index] = datum;
 }
 
 void heap_swapData(int indexA, int indexB, Heap *heap) {
@@ -117,7 +117,7 @@ void heap_heapify(Heap *heap) {
 }
 
 void heap_free(Heap *heap) {
-	free(heap->datum);
+	free(heap->data);
 	free(heap);
 }
 
@@ -188,15 +188,15 @@ int heap__hasParent(int childIndex) {
 }
 
 int heap__leftChild(int parentIndex, Heap *heap) {
-	return heap->datum[heap__leftChildIndex(parentIndex)];
+	return heap->data[heap__leftChildIndex(parentIndex)];
 }
 
 int heap__rightChild(int parentIndex, Heap *heap) {
-	return heap->datum[heap__rightChildIndex(parentIndex)];
+	return heap->data[heap__rightChildIndex(parentIndex)];
 }
 
 int heap__parent(int childIndex, Heap *heap) {
-	return heap->datum[heap__parentIndex(childIndex)];
+	return heap->data[heap__parentIndex(childIndex)];
 }
 
 /* ============================== DEFAULTS ========================= */
