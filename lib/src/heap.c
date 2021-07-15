@@ -19,13 +19,11 @@ Heap *heap_create(int capacity, int defaultValue, int (*comparer)(int a, int b))
 	return heap;
 }
 
-Heap *heap_createFromData(int capacity, int defaultValue, int (*comparer)(int a, int b), int *datum) {
-	Heap *heap = heap_create(capacity, defaultValue, comparer);
+Heap *heap_createFromArray(int *datum, int size, int defaultValue, int (*comparer)(int a, int b)) {
+	Heap *heap = heap_create(size, defaultValue, comparer);
 	
-	for (int i = 0; i < capacity; i++) {
-		heap->datum[i] = datum[i];
-	}
-	
+	memcpy(heap->datum, datum, sizeof(int) * size / sizeof(char));
+	heap->size = size;
 	heap_heapify(heap);
 	
 	return heap;
@@ -55,7 +53,6 @@ int heap_resize(int newCapacity, Heap *heap) {
 	
 	heap->datum = newDatum;
 	heap->capacity = newCapacity;
-	heap__initializeWithDefaultValue(heap->size, heap->capacity, heap);
 	
 	return true;
 }
@@ -158,12 +155,6 @@ void heap__heapifyDown(int parentIndex, Heap *heap) {
 		}
 		
 		parentIndex = swappedIndex;
-	}
-}
-
-void heap__initializeWithDefaultValue(int start, int end, Heap *heap) {
-	for (int i = start; i < end; i++) {
-		heap->datum[i] = heap->defaultValue;
 	}
 }
 
