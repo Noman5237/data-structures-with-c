@@ -81,4 +81,8 @@ void bst_free(BST *tree);
 
 void bst_transplantNode(BST_Node *transplanter, BST_Node *node, BST *tree);
 
+BST_Node bst_leftRotate(BST_Node *node);
+
+BST_Node bst_rightRotate(BST_Node *node);
+
 #endif //DATASTRUCTURESCOURSE_BINARYSEARCHTREE_H
