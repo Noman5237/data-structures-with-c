@@ -29,6 +29,7 @@ add_library(dll lib/src/doublyLinkedList.c)
 add_library(dllstack lib/src/dllStack.c)
 add_library(dllqueue lib/src/dllQueue.c)
 add_library(bst lib/src/binarySearchTree.c)
+add_library(heap lib/src/heap.c)
 
 # ================================================== TASKS ================================================== #
 add_executable(L1T1 Tasks/Lab1/Task1.c)
@@ -54,6 +55,11 @@ target_link_libraries(L6T3 dll)
 
 add_executable(L8T1 Tasks/Lab8/Task1.c)
 target_link_libraries(L8T1 bst)
+
+add_executable(L10T1 Tasks/Lab10/Task1.c)
+target_link_libraries(L10T1 heap)
+
+# ================================================== TESTS ================================================== #
 
 add_executable(LT2T1_1 Tasks/LabTest2/Task1_1.c)
 target_link_libraries(LT2T1_1 dll)
