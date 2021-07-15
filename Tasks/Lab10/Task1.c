@@ -13,29 +13,31 @@ int main() {
 	heap_push(3, minHeap);
 	heap_print(minHeap);
 	
-	heap_free(minHeap);
-//	heap_push(4, minHeap);
-//
-//	heap_push(1, minHeap);
-//	heap_push(6, minHeap);
-//	heap_print(minHeap);
-//	heap_push(7, minHeap);
-//
-//	heap_print(minHeap);
+	heap_push(4, minHeap);
 
-//	heap_pop(minHeap);
-//	heap_print(minHeap);
-//
-//	heap_pop(minHeap);
-//	heap_print(minHeap);
-//
-//	heap_pop(minHeap);
-//	heap_print(minHeap);
-//
-//	heap_pop(minHeap);
-//	heap_print(minHeap);
-//
-//	heap_free(minHeap);
+	heap_push(1, minHeap);
+	heap_push(6, minHeap);
+	heap_print(minHeap);
+	heap_push(7, minHeap);
+
+	heap_print(minHeap);
+
+	heap_pop(minHeap);
+	heap_print(minHeap);
+
+	heap_pop(minHeap);
+	heap_print(minHeap);
+
+	heap_pop(minHeap);
+	heap_print(minHeap);
+
+	heap_pop(minHeap);
+	heap_print(minHeap);
+	
+	heap_push(3, minHeap);
+	heap_print(minHeap);
+
+	heap_free(minHeap);
 	
 	return 0;
 }

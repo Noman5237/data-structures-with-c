@@ -43,14 +43,21 @@ void heap_push(int data, Heap *heap) {
 }
 
 int heap_resize(int newCapacity, Heap *heap) {
-	int *newDatum = realloc(heap->datum, newCapacity);
-	if (newDatum) {
-		heap->datum = newDatum;
-		heap->capacity = newCapacity;
-		heap__initializeWithDefaultValue(heap->size, heap->capacity, heap);
-		return true;
+	int *newDatum = malloc(newCapacity * sizeof(int));
+	if (!newDatum) {
+		return false;
 	}
-	return false;
+	
+	if (heap->datum) {
+		memcpy(newDatum, heap->datum, sizeof(int) * heap->capacity / sizeof(char));
+		free(heap->datum);
+	}
+	
+	heap->datum = newDatum;
+	heap->capacity = newCapacity;
+	heap__initializeWithDefaultValue(heap->size, heap->capacity, heap);
+	
+	return true;
 }
 
 int heap_isEmpty(Heap *heap) {
