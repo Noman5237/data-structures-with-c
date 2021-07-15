@@ -20,7 +20,7 @@ typedef struct Heap {
 
 Heap *heap_create(int capacity, int defaultValue, int (*comparer)(int a, int b));
 
-Heap *heap_createFromData(int capacity, int defaultValue, int (*comparer)(int a, int b), int *datum);
+Heap *heap_createFromArray(int *datum, int size, int defaultValue, int (*comparer)(int a, int b));
 
 void heap_push(int data, Heap *heap);
 
