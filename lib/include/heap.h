@@ -13,33 +13,52 @@ typedef struct Heap {
 	int capacity;
 	int size;
 	int *datum;
+	int defaultValue;
 	
-	int (*comparer)(int a, int b);
+	int (*compare)(int a, int b);
 } Heap;
 
-Heap *heap_create(int capacity, int (*comparer)(int a, int b));
+Heap *heap_create(int capacity, int defaultValue, int (*comparer)(int a, int b));
 
-void heap_insert(int data, Heap *heap);
+Heap *heap_createFromData(int capacity, int defaultValue, int (*comparer)(int a, int b), int *datum);
+
+void heap_push(int data, Heap *heap);
+
+int heap_resize(int newCapacity, Heap *heap);
 
 int heap_isEmpty(Heap *heap);
 
 int heap_isFull(Heap *heap);
 
+int heap_isValidIndex(int index, Heap *heap);
+
 int heap_get(int index, Heap *heap);
 
+void heap_set(int data, int index, Heap *heap);
+
+void heap_swapData(int indexA, int indexB, Heap *heap);
+
 int heap_top(Heap *heap);
-
-int heap_search(int data, Heap *heap);
-
-void heap_remove(int index, Heap *heap);
 
 void heap_pop(Heap *heap);
 
 void heap_sort(Heap *heap);
 
+void heap_heapify(Heap *heap);
+
 void heap_free(Heap *heap);
 
 /* ============================== UTILITY ========================= */
+
+void heap_print(Heap *heap);
+
+void heap__heapifyUp(Heap *heap);
+
+void heap__heapifyDown(int parentIndex, Heap *heap);
+
+void heap__initializeWithDefaultValue(int start, int end, Heap *heap);
+
+/* ============================== HELPER ========================= */
 
 int heap__leftChildIndex(int parentIndex);
 
@@ -47,9 +66,9 @@ int heap__rightChildIndex(int parentIndex);
 
 int heap__parentIndex(int childIndex);
 
-int heap__hasLeftChild(int parentIndex, int heapSize);
+int heap__hasLeftChild(int parentIndex, Heap *heap);
 
-int heap__hasRightChild(int parentIndex, int heapSize);
+int heap__hasRightChild(int parentIndex, Heap *heap);
 
 int heap__hasParent(int childIndex);
 
@@ -59,8 +78,14 @@ int heap__rightChild(int parentIndex, Heap *heap);
 
 int heap__parent(int childIndex, Heap *heap);
 
-void heap__heapifyUp(Heap *heap);
+/* ============================== DEFAULTS ========================= */
 
-void heap__heapifyDown(Heap *heap);
+#define HEAP_MINIMUM_DEFAULT_VALUE INT_MAX
+
+#define HEAP_MAXIMUM_DEFAULT_VALUE INT_MIN
+
+int heap_defaultMinimumHeapComparer(int a, int b);
+
+int heap_defaultMaximumHeapComparer(int a, int b);
 
 #endif //DATASTRUCTURESCOURSE_HEAP_H
