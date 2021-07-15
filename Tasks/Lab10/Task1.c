@@ -39,5 +39,6 @@ int main() {
 
 	heap_free(minHeap);
 	
+	
 	return 0;
 }
