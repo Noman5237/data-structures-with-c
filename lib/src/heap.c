@@ -6,12 +6,11 @@
 
 #include <heap.h>
 
-Heap *heap_create(int capacity, int defaultValue, int (*comparer)(int a, int b)) {
+Heap *heap_create(int capacity, int (*comparer)(int, int)) {
 	Heap *heap = malloc(sizeof(Heap));
 	heap->capacity = capacity;
 	heap->size = 0;
 	heap->data = NULL;
-	heap->defaultValue = defaultValue;
 	heap->compare = comparer;
 	
 	heap_resize(capacity, heap);
@@ -19,8 +18,8 @@ Heap *heap_create(int capacity, int defaultValue, int (*comparer)(int a, int b))
 	return heap;
 }
 
-Heap *heap_createFromArray(int *data, int size, int defaultValue, int (*comparer)(int a, int b)) {
-	Heap *heap = heap_create(size, defaultValue, comparer);
+Heap *heap_createFromArray(int *data, int size, int (*comparer)(int, int)) {
+	Heap *heap = heap_create(size, comparer);
 	
 	memcpy(heap->data, data, sizeof(int) * size / sizeof(char));
 	heap->size = size;
