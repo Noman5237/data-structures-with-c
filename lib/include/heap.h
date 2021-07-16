@@ -34,15 +34,13 @@ int heap_isValidIndex(int index, Heap *heap);
 
 int heap_get(int index, Heap *heap);
 
-void heap_set(int datum, int index, Heap *heap);
-
 void heap_swapData(int indexA, int indexB, Heap *heap);
 
 int heap_top(Heap *heap);
 
 void heap_pop(Heap *heap);
 
-void heap_sort(Heap *heap);
+int * heap_sort(Heap *heap);
 
 void heap_heapify(Heap *heap);
 
@@ -55,8 +53,6 @@ void heap_print(Heap *heap);
 void heap__heapifyUp(Heap *heap);
 
 void heap__heapifyDown(int parentIndex, Heap *heap);
-
-void heap__initializeWithDefaultValue(int start, int end, Heap *heap);
 
 /* ============================== HELPER ========================= */
 

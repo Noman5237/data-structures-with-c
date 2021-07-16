@@ -34,8 +34,12 @@ int main() {
 	heap_print(minHeap);
 	
 	printf("Min Heap Sort\n");
-	heap_sort(minHeap);
-	heap_print(minHeap);
+	int *sorted = heap_sort(minHeap);
+	for (int i = 0; i < minHeap->size; i++) {
+		printf("%d ", sorted[i]);
+	}
+	printf("\n");
+	free(sorted);
 	
 	heap_free(minHeap);
 	
@@ -65,8 +69,12 @@ int main() {
 	heap_print(maxHeap);
 	
 	printf("Max Heap Sort\n");
-	heap_sort(minHeap);
-	heap_print(minHeap);
+	sorted = heap_sort(maxHeap);
+	for (int i = 0; i < maxHeap->size; i++) {
+		printf("%d ", sorted[i]);
+	}
+	printf("\n");
+	free(sorted);
 	
 	heap_free(maxHeap);
 	

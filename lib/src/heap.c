@@ -34,8 +34,8 @@ void heap_push(int datum, Heap *heap) {
 		return;
 	}
 	
+	heap->data[heap->size] = datum;
 	++heap->size;
-	heap_set(datum, heap->size - 1, heap);
 	
 	heap__heapifyUp(heap);
 }
@@ -73,18 +73,10 @@ int heap_get(int index, Heap *heap) {
 	return heap->data[index];
 }
 
-void heap_set(int datum, int index, Heap *heap) {
-	if (!heap_isValidIndex(index, heap)) {
-		return;
-	}
-	
-	heap->data[index] = datum;
-}
-
 void heap_swapData(int indexA, int indexB, Heap *heap) {
 	int temp = heap_get(indexA, heap);
-	heap_set(heap_get(indexB, heap), indexA, heap);
-	heap_set(temp, indexB, heap);
+	heap->data[indexA] = heap_get(indexB, heap);
+	heap->data[indexB] = temp;
 }
 
 int heap_top(Heap *heap) {
@@ -96,18 +88,35 @@ void heap_pop(Heap *heap) {
 		return;
 	}
 	
-	heap_swapData(0, heap->size - 1, heap);
 	--heap->size;
+	heap_swapData(0, heap->size, heap);
 	
 	heap__heapifyDown(0, heap);
 }
 
-void heap_sort(Heap *heap) {
-	int heapSize = heap->size;
-	for (int i = 0; i < heapSize; i++) {
+int * heap_sort(Heap *heap) {
+	int *actualHeapData = heap->data;
+	int actualHeapSize = heap->size;
+	
+	int *sortedData = malloc(sizeof(int) * actualHeapSize);
+	memcpy(sortedData, actualHeapData, sizeof(int) * actualHeapSize / sizeof(char));
+	heap->data = sortedData;
+	
+	// Operating on sortedData
+	for (int i = 0; i < actualHeapSize; i++) {
 		heap_pop(heap);
 	}
-	heap->size = heapSize;
+	
+	// With popping the sorted order is reversed
+	// So we need to reverse once again
+	for (int start = 0, end = actualHeapSize - 1; start < end; start++, end--) {
+		heap_swapData(start, end, heap);
+	}
+	
+	heap->data = actualHeapData;
+	heap->size = actualHeapSize;
+	
+	return sortedData;
 }
 
 void heap_heapify(Heap *heap) {
