@@ -13,14 +13,13 @@ typedef struct Heap {
 	int capacity;
 	int size;
 	int *data;
-	int defaultValue;
 	
 	int (*compare)(int a, int b);
 } Heap;
 
-Heap *heap_create(int capacity, int defaultValue, int (*comparer)(int a, int b));
+Heap *heap_create(int capacity, int (*comparer)(int, int));
 
-Heap *heap_createFromArray(int *data, int size, int defaultValue, int (*comparer)(int a, int b));
+Heap *heap_createFromArray(int *data, int size, int (*comparer)(int, int));
 
 void heap_push(int datum, Heap *heap);
 
@@ -75,10 +74,6 @@ int heap__rightChild(int parentIndex, Heap *heap);
 int heap__parent(int childIndex, Heap *heap);
 
 /* ============================== DEFAULTS ========================= */
-
-#define HEAP_MINIMUM_DEFAULT_VALUE INT_MAX
-
-#define HEAP_MAXIMUM_DEFAULT_VALUE INT_MIN
 
 int heap_defaultMinimumHeapComparer(int a, int b);
 

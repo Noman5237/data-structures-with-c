@@ -9,7 +9,7 @@
 int main() {
 	
 	printf("Min Heap Push Pop Demo\n");
-	Heap *minHeap = heap_create(10, HEAP_MINIMUM_DEFAULT_VALUE, heap_defaultMinimumHeapComparer);
+	Heap *minHeap = heap_create(10, heap_defaultMinimumHeapComparer);
 	
 	heap_push(5, minHeap);
 	heap_push(2, minHeap);
@@ -44,7 +44,7 @@ int main() {
 	heap_free(minHeap);
 	
 	printf("Max Heap Push Pop Demo\n");
-	Heap *maxHeap = heap_create(10, HEAP_MAXIMUM_DEFAULT_VALUE, heap_defaultMaximumHeapComparer);
+	Heap *maxHeap = heap_create(10, heap_defaultMaximumHeapComparer);
 	
 	heap_push(5, maxHeap);
 	heap_push(2, maxHeap);
@@ -82,7 +82,7 @@ int main() {
 	int datum[20] = {20, 4, 13, 11, 9, 16, 18, 19, 1, 10, 3, 2, 15, 6, 8, 12, 7, 5, 14, 17};
 	
 	printf("Min Heapify\n");
-	Heap *minHeapify = heap_createFromArray(datum, 20, HEAP_MINIMUM_DEFAULT_VALUE, heap_defaultMinimumHeapComparer);
+	Heap *minHeapify = heap_createFromArray(datum, 20, heap_defaultMinimumHeapComparer);
 	heap_print(minHeapify);
 	
 	printf("Heap Resize Demo\n");
@@ -91,7 +91,7 @@ int main() {
 	heap_print(minHeapify);
 	
 	printf("Max Heapify\n");
-	Heap *maxHeapify = heap_createFromArray(datum, 20, HEAP_MAXIMUM_DEFAULT_VALUE, heap_defaultMaximumHeapComparer);
+	Heap *maxHeapify = heap_createFromArray(datum, 20, heap_defaultMaximumHeapComparer);
 	heap_print(maxHeapify);
 	
 	printf("Heap Resize Demo\n");
