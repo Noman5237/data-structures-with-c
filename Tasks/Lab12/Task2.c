@@ -14,6 +14,7 @@ int main() {
 		int n, m;
 		scanf("%d %d", &n, &m);
 		BST *tree = bst_create();
+		// TODO: add generic support type for all Data structures
 		int temp;
 		for (int i = 0; i < n; i++) {
 			scanf("%d", &temp);
