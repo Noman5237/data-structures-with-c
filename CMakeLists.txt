@@ -59,13 +59,24 @@ target_link_libraries(L8T1 bst)
 add_executable(L10T1 Tasks/Lab10/Task1.c)
 target_link_libraries(L10T1 heap)
 
+add_executable(L12T1 Tasks/Lab12/Task1.c)
+target_link_libraries(L12T1 bst)
+
+add_executable(L12T2 Tasks/Lab12/Task2.c)
+target_link_libraries(L12T2 bst)
+
 # ================================================== TESTS ================================================== #
 
 add_executable(LT2T1_1 Tasks/LabTest2/Task1_1.c)
 target_link_libraries(LT2T1_1 dll)
+
 add_executable(LT2T1_2 Tasks/LabTest2/Task1_2.c)
 target_link_libraries(LT2T1_2 dll)
+
 add_executable(LT2TC_2 Tasks/LabTest2/TaskC_1.c Tasks/LabTest2/TaskC_2.c)
+
+add_executable(LT3T1 Tasks/LabTest3/Task1.c Tasks/LabTest3/BinarySearchTree.c)
+add_executable(LT3T2 Tasks/LabTest3/Task2.c Tasks/LabTest3/BinarySearchTree.c)
 
 add_executable(Quiz1 Tasks/Quiz/Quiz1.c)
 
