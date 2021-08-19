@@ -71,7 +71,7 @@ int main() {
 		printf("Test Passed\n");
 	}
 	
-	printf("Elements are removing:\n");
+	printf("Elements after removing:\n");
 	bst_print(root);
 	printf("\n");
 	
