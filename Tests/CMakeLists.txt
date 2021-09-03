@@ -8,9 +8,6 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pedantic -Wall")
 include_directories(criterion/include)
 find_library(CRITERION criterion criterion/lib)
 
-add_executable(Test_Simple simple.c)
-target_link_libraries(Test_Simple ${CRITERION})
-
 add_executable(Test_Type type.c)
 target_link_libraries(Test_Type type ${CRITERION})
 
