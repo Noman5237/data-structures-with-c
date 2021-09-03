@@ -42,7 +42,7 @@ void dll_forward(DLL *list) {
 	
 	DLL_Node *currentHead = list->firstnode;
 	while (currentHead != NULL) {
-		printf("%d ", currentHead->data);
+		currentHead->printer(currentHead->data);
 		currentHead = currentHead->next;
 	}
 	
@@ -60,7 +60,7 @@ void dll_backward(DLL *list) {
 	
 	DLL_Node *currentTail = list->lastnode;
 	while (currentTail != NULL) {
-		printf("%d ", currentTail->data);
+		currentTail->printer(currentTail->data);
 		currentTail = currentTail->prev;
 	}
 	

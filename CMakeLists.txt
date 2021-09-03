@@ -6,8 +6,8 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pedantic -Wall")
 
 # ================================================== PATHS ================================================== #
 
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/build/${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/shared)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/build/${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/archive)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/shared)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/archive)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/out/${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE})
 
 message("# ---------------- PATHS ---------------- #")
@@ -17,67 +17,28 @@ message("shared lib dir:        ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ")
 message("static lib dir:        ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
 message("static lib dir:        ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
 
-# ================================================== INCLUDES ================================================== #
-
-# ---------------- Library Headers ---------------- #
-include_directories(lib/include)
-
 # ================================================== RESOURCES ================================================== #
 
 # ================================================== LIBRARIES ================================================== #
-add_library(dll lib/src/doublyLinkedList.c)
-add_library(dllstack lib/src/dllStack.c)
-add_library(dllqueue lib/src/dllQueue.c)
-add_library(bst lib/src/binarySearchTree.c)
-add_library(heap lib/src/heap.c)
+include_directories(include)
 
-# ================================================== TASKS ================================================== #
-add_executable(L1T1 Tasks/Lab1/Task1.c)
-add_executable(L1T2 Tasks/Lab1/Task2.c)
-add_executable(L1T3 Tasks/Lab1/Task3.c)
-add_executable(L1T4 Tasks/Lab1/Task4.c)
+add_library(type src/type.c)
+add_library(primitivetypes src/types/int.c)
+target_link_libraries(primitivetypes type)
 
-add_executable(L2T1 Tasks/Lab2/Task1.c)
+add_library(dll src/doublyLinkedList.c)
+add_library(dllstack src/dllStack.c)
+add_library(dllqueue src/dllQueue.c)
+add_library(bst src/binarySearchTree.c)
+add_library(heap src/heap.c)
+add_library(map src/map.c)
+add_library(graph src/graph.c)
+target_link_libraries(graph map)
 
-add_executable(LT1T1 Tasks/LabTest1/Task1.c)
-add_executable(LT1T2 Tasks/LabTest1/Task2.c)
+# ================================================== LIB TESTS ================================================== #
+add_subdirectory(Tests)
 
-add_executable(L4T1 Tasks/Lab4/Task1.c)
-
-add_executable(L5T1 Tasks/Lab5/Task1.c)
-
-add_executable(L6T1 Tasks/Lab6/Task1.c)
-target_link_libraries(L6T1 dll)
-add_executable(L6T2 Tasks/Lab6/Task2.c)
-target_link_libraries(L6T2 dll)
-add_executable(L6T3 Tasks/Lab6/Task3.c)
-target_link_libraries(L6T3 dll)
-
-add_executable(L8T1 Tasks/Lab8/Task1.c)
-target_link_libraries(L8T1 bst)
-
-add_executable(L10T1 Tasks/Lab10/Task1.c)
-target_link_libraries(L10T1 heap)
-
-add_executable(L12T1 Tasks/Lab12/Task1.c)
-target_link_libraries(L12T1 bst)
-
-add_executable(L12T2 Tasks/Lab12/Task2.c)
-target_link_libraries(L12T2 bst)
-
-# ================================================== TESTS ================================================== #
-
-add_executable(LT2T1_1 Tasks/LabTest2/Task1_1.c)
-target_link_libraries(LT2T1_1 dll)
-
-add_executable(LT2T1_2 Tasks/LabTest2/Task1_2.c)
-target_link_libraries(LT2T1_2 dll)
-
-add_executable(LT2TC_2 Tasks/LabTest2/TaskC_1.c Tasks/LabTest2/TaskC_2.c)
-
-add_executable(LT3T1 Tasks/LabTest3/Task1.c Tasks/LabTest3/BinarySearchTree.c)
-add_executable(LT3T2 Tasks/LabTest3/Task2.c Tasks/LabTest3/BinarySearchTree.c)
-
-add_executable(Quiz1 Tasks/Quiz/Quiz1.c)
+# ================================================== LAB TASKS ================================================== #
+add_subdirectory(Tasks)
 
 add_executable(Main main.c)

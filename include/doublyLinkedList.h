@@ -14,6 +14,11 @@ typedef struct DLL_Node {
 	
 	struct DLL_Node *prev;
 	struct DLL_Node *next;
+	
+	void (*printer)(int data);
+	
+	void (*comparer)(int data1, int data2);
+	
 } DLL_Node;
 
 typedef struct DoublyLinkedList {
