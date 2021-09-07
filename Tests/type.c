@@ -18,7 +18,7 @@ Any *CustomType(int a, char c) {
 	CustomTypeData *customTypeData = malloc(sizeof(CustomTypeData));
 	customTypeData->a = a;
 	customTypeData->c = c;
-	return any_create(customTypeData, t_custom);
+	return any_new(customTypeData, t_custom);
 }
 
 Any *t_custom_copy(Any *this) {
@@ -47,19 +47,19 @@ void t_custom_print(Any *any) {
 
 void t_custom_free(Any *any) {
 	free(any->data);
-	any_free(any);
+	any_destroy(any);
 }
 
 void t_custom_register() {
-	t_custom = type_create("Custom");
+	t_custom = type_new("Custom");
 	t_custom->print = t_custom_print;
-	t_custom->free = t_custom_free;
+	t_custom->destroy = t_custom_free;
 	t_custom->copy = t_custom_copy;
 	t_custom->compare = t_custom_compare;
 }
 
 void t_custom_unregister() {
-	type_free(t_custom);
+	type_destroy(t_custom);
 }
 
 /* ============================== Testing ========================= */
@@ -72,34 +72,42 @@ void teardown(void) {
 	t_custom_unregister();
 }
 
-TestSuite(CustomType, .init = setup, .fini = teardown);
+TestSuite(TypeCustom, .init = setup, .fini = teardown);
 
-Test(CustomType, TypeNameIsCorrect) {
-	cr_assert_str_eq("Custom", t_custom->typeName);
+Test(TypeCustom, TypeName) {
+	let custom = CustomType(5, 'a');
+	cr_assert_str_eq(type(custom), "Custom");
+	destroy(custom);
 }
 
-Test(CustomType, VarCreateDataFree) {
+Test(TypeCustom, VarCreateDataFree) {
 	let custom = CustomType(5, 'a');
 	CustomTypeData *customData = (CustomTypeData *) custom->data;
-	cr_assert_eq(5, customData->a);
-	cr_assert_eq('a', customData->c);
-	t_custom_free(custom);
+	cr_assert_eq(customData->a, 5);
+	cr_assert_eq(customData->c, 'a');
+	destroy(custom);
 }
 
-Test(CustomType, Compare) {
+Test(TypeCustom, Compare) {
 	let custom1 = CustomType(5, 'a');
 	let custom2 = CustomType(5, 'a');
 	let custom3 = CustomType(10, 'a');
 	let custom4 = CustomType(5, 'A');
 	
-	cr_expect(t_custom_compare(custom1, custom2) == 0);
-	cr_expect(t_custom_compare(custom2, custom3) < 0);
-	cr_expect(t_custom_compare(custom1, custom4) > 0);
+	cr_expect_eq(compare(custom1, custom2), 0);
+	cr_expect_lt(compare(custom2, custom3), 0);
+	cr_expect_gt(compare(custom1, custom4), 0);
+	
+	destroy(custom1);
+	destroy(custom2);
+	destroy(custom3);
+	destroy(custom4);
 }
 
-Test(CustomType, Print) {
-	let custom = CustomType(10, 'b');
-	cr_log_info("Printing custom initialized with (10, 'b'): ");
-	t_custom_print(custom);
-	t_custom_free(custom);
+Test(TypeCustom, Copy) {
+	let custom = CustomType(5, 'a');
+	let copyCustom = copy(custom);
+	cr_expect_eq(compare(custom, copyCustom), 0);
+	destroy(custom);
+	destroy(copyCustom);
 }
