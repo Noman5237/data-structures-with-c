@@ -12,4 +12,4 @@ add_executable(Test_Type type.c)
 target_link_libraries(Test_Type type ${CRITERION})
 
 add_executable(Test_Type_Int types/int.c)
-target_link_libraries(Test_Type_Int primitivetypes)
+target_link_libraries(Test_Type_Int primitivetypes ${CRITERION})
