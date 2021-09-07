@@ -32,17 +32,56 @@ typedef struct Any *let;
  * like copy, compare, print, free and more to be added later.
  *
  * These functions define the behaviour of the type.
+ * Types have polymorphic properties but not have inheritance properties.
  */
 typedef struct Type {
+	
+	/**
+	 * @brief
+	 * Unique type name in string.
+	 */
 	char *typeName;
 	
-	Any *(*copy)(Any *any);
+	/**
+	 * @brief
+	 * Deep copies any given variable and returns copy.
+	 *
+	 * @param this the variable to deep copy
+	 *
+	 * @return deep copy of the passed variable
+	 */
+	Any *(*copy)(Any *this);
 	
-	int (*compare)(Any *arg1, Any *arg2);
+	/**
+	 * @brief
+	 * Compares any two passed variables.
+	 *
+	 * @param this the variable to compare against
+	 * @param other another variable
+	 *
+	 * @return negative integer if this is less than other; zero if they are equal
+	 * and positive integer if this is greater than other
+	 */
+	int (*compare)(Any *this, Any *other);
 	
-	void (*print)(Any *any);
+	/**
+	 * @brief
+	 * Prints the string representation of the variable in terminal.
+	 *
+	 * @note
+	 * Needs to be replaced with toString method when memory could be automatically manageable.
+	 *
+	 * @param this the variable of which string representation needs to be printed.
+	 */
+	void (*print)(Any *this);
 	
-	void (*free)(Any *any);
+	/**
+	 * @brief
+	 * Frees the memory associated with the passed variable.
+	 *
+	 * @param this the variable of whose memory and data needs to freed
+	 */
+	void (*free)(Any *this);
 } Type;
 
 /**
