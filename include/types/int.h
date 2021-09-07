@@ -9,15 +9,17 @@
 
 #include <type.h>
 
-Type *t_int;
-
 Any *Int(int data);
 
-int t_int_compare(Any *arg1, Any *arg2);
+Any *t_int_copy(Any *this);
 
-void t_int_print(Any *any);
+int t_int_compare(Any *this, Any *other);
 
-void t_int_free(Any *any);
+void t_int_print(Any *this);
+
+void t_int_destroy(Any *this);
+
+Type *t_int;
 
 void t_int_register();
 
