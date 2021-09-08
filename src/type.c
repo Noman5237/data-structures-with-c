@@ -42,6 +42,6 @@ inline void any_print(Any *this) {
 }
 
 void any_destroy(Any *this) {
-	this->type->destroy(this);
+	this->type->destroyData(this);
 	free(this);
 }

@@ -35,9 +35,13 @@ struct ListData {
 
 typedef struct ListData ListData;
 
-/* ============================== Helper Functions ========================= */
-
 ListData *list_data(Any *this);
+
+ListData *list_data_new();
+
+void list_data_destroy(Any *list);
+
+/* ============================== Helper Functions ========================= */
 
 ListNode *list_getNode(ListData *list, int index);
 
@@ -47,4 +51,4 @@ void list_insertAfter(ListData *list, ListNode *node, ListNode *newNode);
 
 void list_removeNode(ListData *list, ListNode *node);
 
-#endif // DATASTRUCTURESCOURSE_LIST_H
+#endif // DATASTRUCTURESCOURSE_INTERNAL_LIST_H

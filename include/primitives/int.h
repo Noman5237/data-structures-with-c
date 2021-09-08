@@ -4,8 +4,8 @@
  * @date: 8/26/2021; 5:41 PM
  */
 
-#ifndef DATASTRUCTURESCOURSE_INT_H
-#define DATASTRUCTURESCOURSE_INT_H
+#ifndef DATASTRUCTURESCOURSE_PRIMITIVE_INT_H
+#define DATASTRUCTURESCOURSE_PRIMITIVE_INT_H
 
 #include <type.h>
 
@@ -29,6 +29,4 @@ int int_compare(Any *this, Any *other);
 
 void int_print(Any *this);
 
-void int_destroy(Any *this);
-
-#endif //DATASTRUCTURESCOURSE_INT_H
+#endif //DATASTRUCTURESCOURSE_PRIMITIVE_INT_H

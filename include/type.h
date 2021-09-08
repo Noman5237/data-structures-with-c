@@ -79,7 +79,7 @@ typedef struct Type {
 	 *
 	 * @param this the variable of whose memory and data needs to freed
 	 */
-	void (*destroy)(Any *this);
+	void (*destroyData)(Any *this);
 } Type;
 
 /**

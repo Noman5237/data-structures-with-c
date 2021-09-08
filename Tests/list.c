@@ -22,13 +22,19 @@ TestSuite(TypeList, .init = setup, .fini = teardown);
 
 Test(TypeList, TypeName) {
 	let list = List();
+	
 	cr_assert_str_eq(any_type(list), "List");
+	
 	any_destroy(list);
 }
 
 Test(TypeList, Empty) {
 	let list = List();
+	
 	cr_assert_eq(list_isEmpty(list), 1);
+	list_append(list, Int(1));
+	cr_assert_eq(list_isEmpty(list), 0);
+	
 	any_destroy(list);
 }
 

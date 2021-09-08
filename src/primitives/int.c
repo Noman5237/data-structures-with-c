@@ -4,7 +4,7 @@
  * @date: 8/26/2021; 4:00 PM
  */
 
-#include <dscommon.h>
+#include <internals/primitives/int.h>
 
 /* ============================== Runtime Registry ========================= */
 
@@ -17,7 +17,7 @@ void t_int_register() {
 	t_int->clone = int_clone;
 	t_int->compare = int_compare;
 	t_int->print = int_print;
-	t_int->destroy = int_destroy;
+	t_int->destroyData = int_data_destroy;
 }
 
 void t_int_deregister() {
@@ -57,6 +57,6 @@ void int_print(Any *this) {
 	printf("%d", *(int *) this->data);
 }
 
-void int_destroy(Any *this) {
+void int_data_destroy(Any *this) {
 	free(this->data);
 }

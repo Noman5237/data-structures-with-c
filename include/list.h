@@ -23,8 +23,6 @@ Any *List();
 
 void list_print(Any *this);
 
-void list_destroy(Any *this);
-
 /* ============================== Advanced Type Functions ========================= */
 
 int list_size(Any *this);

@@ -49,7 +49,7 @@ void custom_print(Any *any) {
 	cr_log_info("(%d, %c)", data->a, data->c);
 }
 
-void custom_free(Any *any) {
+void custom_data_destroy(Any *any) {
 	free(any->data);
 }
 
@@ -60,7 +60,7 @@ void custom_register() {
 	
 	t_custom = type_new("Custom");
 	t_custom->print = custom_print;
-	t_custom->destroy = custom_free;
+	t_custom->destroyData = custom_data_destroy;
 	t_custom->clone = custom_clone;
 	t_custom->compare = custom_compare;
 }

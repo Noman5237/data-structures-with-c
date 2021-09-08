@@ -15,7 +15,7 @@ void t_list_register() {
 	
 	t_list = type_new("List");
 	t_list->print = list_print;
-	t_list->destroy = list_destroy;
+	t_list->destroyData = list_data_destroy;
 }
 
 void t_list_deregister() {
@@ -48,13 +48,31 @@ void list_node_destroy(ListNode *node) {
 	free(node);
 }
 
-/* ============================== Core Type Functions ========================= */
-
-Any *List() {
+ListData *list_data_new() {
 	ListData *list = malloc(sizeof(ListData));
 	list->head = NULL;
 	list->tail = NULL;
 	list->size = 0;
+	
+	return list;
+}
+
+void list_data_destroy(Any *this) {
+	ListData *list = this->data;
+	ListNode *current = list->head;
+	
+	while (current != NULL) {
+		list_node_destroy(current);
+		current = current->next;
+	}
+	
+	free(list);
+}
+
+/* ============================== Core Type Functions ========================= */
+
+Any *List() {
+	ListData *list = list_data_new();
 	let this = any_new(list, t_list);
 	return this;
 }
@@ -74,18 +92,6 @@ void list_print(Any *this) {
 	}
 	
 	printf("]");
-}
-
-void list_destroy(Any *this) {
-	ListData *list = this->data;
-	ListNode *current = list->head;
-	
-	while (current != NULL) {
-		list_node_destroy(current);
-		current = current->next;
-	}
-	
-	free(list);
 }
 
 /* ============================== Advanced Type Functions ========================= */
