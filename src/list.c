@@ -82,8 +82,10 @@ void list_print(Any *this) {
 	ListNode *current = list->head;
 	
 	printf("[");
-	any_print(current->datum);
-	current = current->next;
+	if (list->size > 0) {
+		any_print(current->datum);
+		current = current->next;
+	}
 	
 	while (current != NULL) {
 		printf(", ");
