@@ -7,11 +7,11 @@
 #ifndef DATASTRUCTURESCOURSE_GRAPH_H
 #define DATASTRUCTURESCOURSE_GRAPH_H
 
-#include <dsCommon.h>
-#include <doublyLinkedList.h>
+#include <dscommon.h>
+#include <list.h>
 
 typedef struct Graph_Node {
-	DLL *adjacentNodes;
+	ListData *adjacentNodes;
 } Graph_Node;
 
 typedef struct Graph {

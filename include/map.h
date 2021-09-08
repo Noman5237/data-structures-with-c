@@ -7,7 +7,7 @@
 #ifndef DATASTRUCTURESCOURSE_MAP_H
 #define DATASTRUCTURESCOURSE_MAP_H
 
-#include <dsCommon.h>
+#include <dscommon.h>
 
 typedef struct Map_Item {
 	int key;
