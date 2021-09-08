@@ -19,7 +19,9 @@ message("static lib dir:        ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
 
 # ================================================== RESOURCES ================================================== #
 
+
 # ================================================== LIBRARIES ================================================== #
+
 include_directories(include)
 
 add_library(type src/type.c)
@@ -32,7 +34,9 @@ target_link_libraries(list primitivetypes)
 add_library(stack src/stack.c)
 target_link_libraries(stack list)
 
-add_library(dllqueue src/queue.c)
+add_library(queue src/queue.c)
+target_link_libraries(queue list)
+
 add_library(bst src/binarySearchTree.c)
 add_library(heap src/heap.c)
 add_library(map src/map.c)
@@ -40,9 +44,11 @@ add_library(graph src/graph.c)
 target_link_libraries(graph map)
 
 # ================================================== LIB TESTS ================================================== #
+
 add_subdirectory(Tests)
 
 # ================================================== LAB TASKS ================================================== #
+
 add_subdirectory(Tasks)
 
 add_executable(Main main.c)

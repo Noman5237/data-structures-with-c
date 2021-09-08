@@ -1,12 +1,11 @@
 /**
  * @file: dll_stack.c
  * @author: Anonyman637
- * @date: 6/17/2021{} 12:58 AM
+ * @date: 6/17/2021 12:58 AM
  */
 
-#include <dscommon.h>
-#include <list.h>
 #include <stack.h>
+#include <dscommon.h>
 #include <internals/list.h>
 
 /* ============================== Runtime Registry ========================= */

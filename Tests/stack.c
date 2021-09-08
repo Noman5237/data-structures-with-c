@@ -4,8 +4,8 @@
  * @date: 9/8/2021; 5:21 PM
  */
 
-#include <dscommon.h>
 #include <stack.h>
+#include <dscommon.h>
 #include <criterion/criterion.h>
 
 void setup(void) {

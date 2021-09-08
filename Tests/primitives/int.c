@@ -4,8 +4,8 @@
  * @date: 8/26/2021; 8:27 PM
  */
 
-#include <criterion/criterion.h>
 #include <primitives/primitives.h>
+#include <criterion/criterion.h>
 
 void setup(void) {
 	t_int_register();

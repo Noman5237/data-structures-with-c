@@ -4,8 +4,8 @@
  * @date: 9/8/2021; 2:07 AM
  */
 
-#include <dscommon.h>
 #include <list.h>
+#include <dscommon.h>
 #include <criterion/criterion.h>
 
 void setup(void) {
@@ -129,6 +129,28 @@ Test(TypeList, GetIndexOf) {
 	cr_assert_eq(list_getIndexOf(list, Int(2)), 1);
 	cr_assert_eq(list_getIndexOf(list, Int(3)), 2);
 	cr_assert_eq(list_getIndexOf(list, Int(4)), -1);
+	
+	any_destroy(list);
+}
+
+Test(TypeList, Print) {
+	let list = List();
+	
+	let item0 = List();
+	list_append(item0, Int(0));
+	list_append(item0, Int(1));
+	list_append(item0, Int(2));
+	
+	let item1 = List();
+	list_append(item1, Int(4));
+	list_append(item1, Int(5));
+	list_append(item1, Int(6));
+	
+	list_append(list, item0);
+	list_append(list, Int(10));
+	list_append(list, item1);
+	
+	any_print(list);
 	
 	any_destroy(list);
 }
