@@ -5,6 +5,8 @@
  */
 
 #include <type.h>
+#include <stdlib.h>
+#include <string.h>
 
 Type *type_new(char *typeName) {
 	Type *newType = malloc(sizeof(Type));
@@ -25,11 +27,23 @@ Any *any_new(void *data, Type *type) {
 	return any;
 }
 
-/**
- * All the generic variables call this function after they have freed the data
- * in their own way. This function is meant to be only called in the type specified
- * free function and not by any other function which intents to free generic variables.
- */
-void any_destroy(Any *any) {
-	free(any);
+inline char *any_type(Any *this) {
+	return this->type->typeName;
+}
+
+inline Any *any_clone(Any *this) {
+	return this->type->clone(this);
+}
+
+inline int any_compare(Any *this, Any *other) {
+	return this->type->compare(this, other);
+}
+
+inline void any_print(Any *this) {
+	this->type->print(this);
+}
+
+void any_destroy(Any *this) {
+	this->type->destroy(this);
+	free(this);
 }

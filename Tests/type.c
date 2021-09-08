@@ -9,26 +9,30 @@
 
 Type *t_custom;
 
-typedef struct CustomTypeData {
+typedef struct CustomData {
 	int a;
 	char c;
-} CustomTypeData;
+} CustomData;
 
 Any *CustomType(int a, char c) {
-	CustomTypeData *customTypeData = malloc(sizeof(CustomTypeData));
+	CustomData *customTypeData = malloc(sizeof(CustomData));
 	customTypeData->a = a;
 	customTypeData->c = c;
 	return any_new(customTypeData, t_custom);
 }
 
-Any *t_custom_copy(Any *this) {
-	CustomTypeData *customTypeData = this->data;
+CustomData *custom_data(Any *this) {
+	return (CustomData *) this->data;
+}
+
+Any *custom_clone(Any *this) {
+	CustomData *customTypeData = custom_data(this);
 	return CustomType(customTypeData->a, customTypeData->c);
 }
 
-int t_custom_compare(Any *this, Any *other) {
-	CustomTypeData *thisData = this->data;
-	CustomTypeData *otherData = other->data;
+int custom_compare(Any *this, Any *other) {
+	CustomData *thisData = custom_data(this);
+	CustomData *otherData = custom_data(other);
 	if (thisData->a == otherData->a) {
 		if (thisData->c == otherData->c) {
 			return 0;
@@ -40,52 +44,64 @@ int t_custom_compare(Any *this, Any *other) {
 	}
 }
 
-void t_custom_print(Any *any) {
-	CustomTypeData *data = any->data;
+void custom_print(Any *any) {
+	CustomData *data = any->data;
 	cr_log_info("(%d, %c)", data->a, data->c);
 }
 
-void t_custom_free(Any *any) {
+void custom_free(Any *any) {
 	free(any->data);
-	any_destroy(any);
 }
 
-void t_custom_register() {
+void custom_register() {
+	if (t_custom != NULL) {
+		return;
+	}
+	
 	t_custom = type_new("Custom");
-	t_custom->print = t_custom_print;
-	t_custom->destroy = t_custom_free;
-	t_custom->copy = t_custom_copy;
-	t_custom->compare = t_custom_compare;
+	t_custom->print = custom_print;
+	t_custom->destroy = custom_free;
+	t_custom->clone = custom_clone;
+	t_custom->compare = custom_compare;
 }
 
-void t_custom_unregister() {
+void custom_unregister() {
+	if (t_custom == NULL) {
+		return;
+	}
+	
 	type_destroy(t_custom);
+	t_custom = NULL;
 }
 
 /* ============================== Testing ========================= */
 
 void setup(void) {
-	t_custom_register();
+	custom_register();
 }
 
 void teardown(void) {
-	t_custom_unregister();
+	custom_unregister();
 }
 
 TestSuite(TypeCustom, .init = setup, .fini = teardown);
 
 Test(TypeCustom, TypeName) {
 	let custom = CustomType(5, 'a');
-	cr_assert_str_eq(type(custom), "Custom");
-	destroy(custom);
+	
+	cr_assert_str_eq(any_type(custom), "Custom");
+	
+	any_destroy(custom);
 }
 
 Test(TypeCustom, VarCreateDataFree) {
 	let custom = CustomType(5, 'a');
-	CustomTypeData *customData = (CustomTypeData *) custom->data;
+	CustomData *customData = (CustomData *) custom->data;
+	
 	cr_assert_eq(customData->a, 5);
 	cr_assert_eq(customData->c, 'a');
-	destroy(custom);
+	
+	any_destroy(custom);
 }
 
 Test(TypeCustom, Compare) {
@@ -94,20 +110,22 @@ Test(TypeCustom, Compare) {
 	let custom3 = CustomType(10, 'a');
 	let custom4 = CustomType(5, 'A');
 	
-	cr_expect_eq(compare(custom1, custom2), 0);
-	cr_expect_lt(compare(custom2, custom3), 0);
-	cr_expect_gt(compare(custom1, custom4), 0);
+	cr_expect_eq(any_compare(custom1, custom2), 0);
+	cr_expect_lt(any_compare(custom2, custom3), 0);
+	cr_expect_gt(any_compare(custom1, custom4), 0);
 	
-	destroy(custom1);
-	destroy(custom2);
-	destroy(custom3);
-	destroy(custom4);
+	any_destroy(custom1);
+	any_destroy(custom2);
+	any_destroy(custom3);
+	any_destroy(custom4);
 }
 
-Test(TypeCustom, Copy) {
+Test(TypeCustom, Clone) {
 	let custom = CustomType(5, 'a');
-	let copyCustom = copy(custom);
-	cr_expect_eq(compare(custom, copyCustom), 0);
-	destroy(custom);
-	destroy(copyCustom);
+	let copyCustom = any_clone(custom);
+	
+	cr_expect_eq(any_compare(custom, copyCustom), 0);
+	
+	any_destroy(custom);
+	any_destroy(copyCustom);
 }
