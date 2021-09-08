@@ -7,7 +7,7 @@
 #ifndef DATASTRUCTURESCOURSE_BINARYSEARCHTREE_H
 #define DATASTRUCTURESCOURSE_BINARYSEARCHTREE_H
 
-#include <dsCommon.h>
+#include <dscommon.h>
 
 /* ============================== BST_NODE ========================= */
 

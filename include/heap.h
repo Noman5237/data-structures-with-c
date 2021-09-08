@@ -7,7 +7,7 @@
 #ifndef DATASTRUCTURESCOURSE_HEAP_H
 #define DATASTRUCTURESCOURSE_HEAP_H
 
-#include <dsCommon.h>
+#include <dscommon.h>
 
 typedef struct Heap {
 	int capacity;
