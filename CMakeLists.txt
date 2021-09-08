@@ -23,12 +23,16 @@ message("static lib dir:        ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
 include_directories(include)
 
 add_library(type src/type.c)
-add_library(primitivetypes src/types/int.c)
+add_library(primitivetypes src/primitives/int.c)
 target_link_libraries(primitivetypes type)
 
-add_library(dll src/doublyLinkedList.c)
-add_library(dllstack src/dllStack.c)
-add_library(dllqueue src/dllQueue.c)
+add_library(list src/list.c)
+target_link_libraries(list primitivetypes)
+
+add_library(stack src/stack.c)
+target_link_libraries(stack list)
+
+add_library(dllqueue src/queue.c)
 add_library(bst src/binarySearchTree.c)
 add_library(heap src/heap.c)
 add_library(map src/map.c)

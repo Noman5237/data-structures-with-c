@@ -7,4 +7,10 @@
 
 #include "int.h"
 
+#define t_primitives_register() \
+    t_int_register()
+
+#define t_primitives_deregister() \
+	t_int_deregister()
+
 #endif //DATASTRUCTURESCOURSE_PRIMITIVES_H
