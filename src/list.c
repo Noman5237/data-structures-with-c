@@ -14,6 +14,7 @@ void t_list_register() {
 	}
 	
 	t_list = type_new("List");
+	t_list->print = list_print;
 	t_list->destroy = list_destroy;
 }
 
@@ -56,6 +57,23 @@ Any *List() {
 	list->size = 0;
 	let this = any_new(list, t_list);
 	return this;
+}
+
+void list_print(Any *this) {
+	ListData *list = this->data;
+	ListNode *current = list->head;
+	
+	printf("[");
+	any_print(current->datum);
+	current = current->next;
+	
+	while (current != NULL) {
+		printf(", ");
+		any_print(current->datum);
+		current = current->next;
+	}
+	
+	printf("]");
 }
 
 void list_destroy(Any *this) {

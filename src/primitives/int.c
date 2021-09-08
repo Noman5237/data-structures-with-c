@@ -4,7 +4,7 @@
  * @date: 8/26/2021; 4:00 PM
  */
 
-#include <primitives/int.h>
+#include <dscommon.h>
 
 /* ============================== Runtime Registry ========================= */
 

@@ -7,6 +7,7 @@
 #ifndef DATASTRUCTURESCOURSE_INTERNAL_LIST_H
 #define DATASTRUCTURESCOURSE_INTERNAL_LIST_H
 
+#include <dscommon.h>
 #include <list.h>
 
 /* ============================== List Node ========================= */

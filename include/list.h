@@ -7,7 +7,7 @@
 #ifndef DATASTRUCTURESCOURSE_LIST_H
 #define DATASTRUCTURESCOURSE_LIST_H
 
-#include <dsCommon.h>
+#include <type.h>
 
 /* ============================== Runtime Registry ========================= */
 
@@ -20,6 +20,8 @@ void t_list_deregister();
 /* ============================== Core Type Functions ========================= */
 
 Any *List();
+
+void list_print(Any *this);
 
 void list_destroy(Any *this);
 

@@ -7,7 +7,7 @@
 #ifndef DATASTRUCTURESCOURSE_INT_H
 #define DATASTRUCTURESCOURSE_INT_H
 
-#include <dsCommon.h>
+#include <type.h>
 
 /* ============================== Runtime Registry ========================= */
 

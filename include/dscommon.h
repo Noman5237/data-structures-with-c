@@ -19,5 +19,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <string.h>
+#include <type.h>
+#include <primitives/primitives.h>
 
 #endif //DATASTRUCTURESCOURSE_DSCOMMON_H

@@ -4,6 +4,7 @@
  * @date: 9/8/2021; 2:07 AM
  */
 
+#include <dscommon.h>
 #include <list.h>
 #include <criterion/criterion.h>
 

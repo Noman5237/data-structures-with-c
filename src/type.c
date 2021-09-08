@@ -4,9 +4,7 @@
  * @date: 8/26/2021; 3:33 PM
  */
 
-#include <type.h>
-#include <stdlib.h>
-#include <string.h>
+#include <dscommon.h>
 
 Type *type_new(char *typeName) {
 	Type *newType = malloc(sizeof(Type));
