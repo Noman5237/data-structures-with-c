@@ -4,7 +4,7 @@
  * @date: 5/27/2021; 2:29 PM
  */
 
-#include <dsCommon.h>
+#include <dscommon.h>
 
 struct Node {
 	int data;
@@ -22,7 +22,7 @@ struct List {
 
 typedef struct List List;
 
-Node *node_create(int data) {
+Node *createNode(int data) {
 	//Declare a pointer to hold the address of a node
 	Node *node;
 	
@@ -37,7 +37,7 @@ Node *node_create(int data) {
 }
 
 //Traverse the list in forward direction and print the data
-void list_forward(List *list) {
+void forward(List *list) {
 	printf("\n");
 	
 	Node *currentHead = list->firstnode;
@@ -54,7 +54,7 @@ void list_forward(List *list) {
 }
 
 //Traverse the list in backward direction and print the data
-void list_backword(List *list) {
+void backward(List *list) {
 	printf("\n");
 	
 	Node *currentTail = list->lastnode;
@@ -72,7 +72,7 @@ void list_backword(List *list) {
 }
 
 // Insert the "newnode" before the "node" in the provided "list"
-void list_insertBefore(Node *newnode, Node *node, List *list) {
+void insertBefore(Node *newnode, Node *node, List *list) {
 	newnode->prev = node->prev;
 	newnode->next = node;
 	
@@ -87,7 +87,7 @@ void list_insertBefore(Node *newnode, Node *node, List *list) {
 }
 
 //Insert the "newnode" after the "node" in th "list"
-void list_insertAfter(Node *newnode, Node *node, List *list) {
+void insertAfter(Node *newnode, Node *node, List *list) {
 	newnode->prev = node;
 	newnode->next = node->next;
 	
@@ -102,28 +102,28 @@ void list_insertAfter(Node *newnode, Node *node, List *list) {
 }
 
 // Insert the "newnode" at the beginning of the list
-void list_insertAtFront(Node *newnode, List *list) {
+void insertAtFront(Node *newnode, List *list) {
 	if (list->firstnode == NULL) {
 		list->firstnode = newnode;
 		list->lastnode = newnode;
 	} else {
-		list_insertBefore(newnode, list->firstnode, list);
+		insertBefore(newnode, list->firstnode, list);
 	}
 }
 
 // Insert the "newnode" at the end of the "list"
-void list_insertAtEnd(Node *newnode, List *list) {
+void insertAtEnd(Node *newnode, List *list) {
 	if (list->lastnode == NULL) {
 		list->lastnode = newnode;
 		list->firstnode = newnode;
 	} else {
-		list_insertAfter(newnode, list->lastnode, list);
+		insertAfter(newnode, list->lastnode, list);
 	}
 	
 }
 
 // Removes a node from a certain location of the list. (0 based indexing)
-void list_removeAt(int index, List *list) {
+void removeAt(int index, List *list) {
 	Node *current = list->firstnode;
 	for (int i = 0; i < index; i++) {
 		current = current->next;
@@ -152,37 +152,37 @@ int main() {
 	list.lastnode = NULL;
 	
 	
-	newNode = node_create(1);
-	list_insertAtFront(newNode, &list);
-	newNode = node_create(2);
-	list_insertAtFront(newNode, &list);
-	newNode = node_create(3);
-	list_insertBefore(newNode, list.lastnode, &list);
-	newNode = node_create(4);
-	list_insertAfter(newNode, list.lastnode, &list);
-	newNode = node_create(5);
-	list_insertAfter(newNode, list.firstnode, &list);
-	newNode = node_create(6);
-	list_insertAtEnd(newNode, &list);
+	newNode = createNode(1);
+	insertAtFront(newNode, &list);
+	newNode = createNode(2);
+	insertAtFront(newNode, &list);
+	newNode = createNode(3);
+	insertBefore(newNode, list.lastnode, &list);
+	newNode = createNode(4);
+	insertAfter(newNode, list.lastnode, &list);
+	newNode = createNode(5);
+	insertAfter(newNode, list.firstnode, &list);
+	newNode = createNode(6);
+	insertAtEnd(newNode, &list);
 	
-	list_forward(&list);
-	list_backword(&list);
+	forward(&list);
+	backward(&list);
 	
-	list_removeAt(2, &list);
-	list_forward(&list);
+	removeAt(2, &list);
+	forward(&list);
 	
-	list_removeAt(4, &list);
-	list_forward(&list);
+	removeAt(4, &list);
+	forward(&list);
 	
-	list_removeAt(0, &list);
-	list_forward(&list);
+	removeAt(0, &list);
+	forward(&list);
 	
-	list_removeAt(0, &list);
-	list_removeAt(0, &list);
-	list_forward(&list);
+	removeAt(0, &list);
+	removeAt(0, &list);
+	forward(&list);
 	
-	list_removeAt(0, &list);
-	list_forward(&list);
+	removeAt(0, &list);
+	forward(&list);
 	
 	printf("done");
 	return 0;

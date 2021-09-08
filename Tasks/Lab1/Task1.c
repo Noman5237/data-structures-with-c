@@ -4,7 +4,7 @@
  * @date: 4/22/2021; 1:52 PM
  */
 
-#include <dsCommon.h>
+#include <dscommon.h>
 
 /**
  * Echoes the provided CGPA and Age
