@@ -7,8 +7,6 @@
 #ifndef DATASTRUCTURESCOURSE_TYPE_H
 #define DATASTRUCTURESCOURSE_TYPE_H
 
-#include <dsCommon.h>
-
 /**
  * @brief
  * Any is the generic struct that holds the data and type metadata.
@@ -44,13 +42,13 @@ typedef struct Type {
 	
 	/**
 	 * @brief
-	 * Deep copies any given variable and returns copy.
+	 * Deep copies any given variable and returns clone.
 	 *
 	 * @param this the variable to deep copy
 	 *
 	 * @return deep copy of the passed variable
 	 */
-	Any *(*copy)(Any *this);
+	Any *(*clone)(Any *this);
 	
 	/**
 	 * @brief
@@ -102,49 +100,6 @@ Type *type_new(char *typeName);
  */
 void type_destroy(Type *type);
 
-
-/* ============================== Type Comfortability Macros ========================= */
-/**
- * @brief
- * Deep copies any given variable and returns copy.
- *
- * @param this the variable to deep copy
- *
- * @return deep copy of the passed variable
- */
-#define copy(this) this->type->copy(this)
-
-/**
- * @brief
- * Compares any two passed variables.
- *
- * @param this the variable to compare against
- * @param other another variable
- *
- * @return negative integer if this is less than other; zero if they are equal
- * and positive integer if this is greater than other
- */
-#define compare(this, other) this->type->compare(this, other)
-
-/**
- * @brief
- * Prints the string representation of the variable in terminal.
- *
- * @note
- * Needs to be replaced with toString method when memory could be automatically manageable.
- *
- * @param this the variable of which string representation needs to be printed.
- */
-#define print(this) this->type->print(this)
-
-/**
- * @brief
- * Frees the memory associated with the passed variable.
- *
- * @param this the variable of whose memory and data needs to freed
- */
-#define destroy(this) this->type->destroy(this)
-
 /* ============================== Generic Type ========================= */
 
 /**
@@ -181,16 +136,50 @@ Any *any_new(void *data, Type *type);
 
 /**
  * @brief
+ * Unique type name in string.
+ */
+char *any_type(Any *this);
+
+/**
+ * @brief
+ * Deep copies any given variable and returns clone.
+ *
+ * @param this the variable to deep copy
+ *
+ * @return deep copy of the passed variable
+ */
+ 
+Any *any_clone(Any *this);
+
+/**
+ * @brief
+ * Compares any two passed variables.
+ *
+ * @param this the variable to compare against
+ * @param other another variable
+ *
+ * @return negative integer if this is less than other; zero if they are equal
+ * and positive integer if this is greater than other
+ */
+int any_compare(Any *this, Any *other);
+
+/**
+ * @brief
+ * Prints the string representation of the variable in terminal.
+ *
+ * @note
+ * Needs to be replaced with toString method when memory could be automatically manageable.
+ *
+ * @param this the variable of which string representation needs to be printed.
+ */
+void any_print(Any *this);
+
+/**
+ * @brief
  * Frees the memory occupied by instance of Any
  *
  * @param any pointer to Any instance
  */
 void any_destroy(Any *any);
-
-/**
- * @brief
- * Unique type name in string.
- */
-#define type(this) this->type->typeName
 
 #endif //DATASTRUCTURESCOURSE_TYPE_H
