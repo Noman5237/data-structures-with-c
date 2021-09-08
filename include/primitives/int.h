@@ -19,7 +19,7 @@ void t_int_deregister();
 
 /* ============================== Core Type Functions ========================= */
 
-Any *Int(int data);
+Any *Int(int integer);
 
 int *int_data(Any *this);
 

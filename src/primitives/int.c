@@ -31,11 +31,11 @@ void t_int_deregister() {
 
 /* ============================== Core Type Functions ========================= */
 
-Any *Int(int data) {
-	int *dataInMemory = malloc(sizeof(int));
-	*dataInMemory = data;
-	Any *int_any = any_new(dataInMemory, t_int);
-	return int_any;
+Any *Int(int integer) {
+	int *data = malloc(sizeof(int));
+	*data = integer;
+	Any *this = any_new(data, t_int);
+	return this;
 }
 
 inline int *int_data(Any *this) {
