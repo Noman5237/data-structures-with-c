@@ -43,11 +43,14 @@ add_executable(L13T1 Lab13/Task1.c)
 target_link_libraries(L13T1 graph)
 
 # ================================================== LAB TESTS ================================================== #
+
+add_library(lab2dll LabTest2/doubleLinkedList.c)
+
 add_executable(LT2T1_1 LabTest2/Task1_1.c)
-target_link_libraries(LT2T1_1 dll)
+target_link_libraries(LT2T1_1 lab2dll)
 
 add_executable(LT2T1_2 LabTest2/Task1_2.c)
-target_link_libraries(LT2T1_2 dll)
+target_link_libraries(LT2T1_2 lab2dll)
 
 add_executable(LT2TC_2 LabTest2/TaskC_1.c LabTest2/TaskC_2.c)
 
