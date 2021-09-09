@@ -4,8 +4,8 @@
  * @date: 8/26/2021; 5:52 PM
  */
 
-#include <type.h>
 #include <criterion/criterion.h>
+#include <type.h>
 
 Type *t_custom;
 

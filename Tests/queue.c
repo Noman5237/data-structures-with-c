@@ -4,9 +4,9 @@
  * @date: 9/8/2021; 10:56 PM
  */
 
-#include <dscommon.h>
-#include <queue.h>
 #include <criterion/criterion.h>
+#include <queue.h>
+#include <dscommon.h>
 
 void setup(void) {
 	t_primitives_register();
