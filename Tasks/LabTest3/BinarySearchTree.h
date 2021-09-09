@@ -4,7 +4,7 @@
  * @date: 8/5/2021; 2:35 PM
  */
 
-#ifndef DATASTRUCTURESCOURSE_BINARYSEARCHTREE_H
+#ifndef DATASTRUCTURESCOURSE_BST_H
 #define DATASTRUCTURESCOURSE_BINARYSEARCHTREE_H
 
 #include <stdlib.h>
@@ -33,4 +33,4 @@ void bst_print(Node *root);
 
 void bst_free(Node *root);
 
-#endif //DATASTRUCTURESCOURSE_BINARYSEARCHTREE_H
+#endif //DATASTRUCTURESCOURSE_BST_H

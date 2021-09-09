@@ -37,7 +37,7 @@ target_link_libraries(stack list)
 add_library(queue src/queue.c)
 target_link_libraries(queue list)
 
-add_library(bst src/binarySearchTree.c)
+add_library(bst src/bst.c)
 add_library(heap src/heap.c)
 add_library(map src/map.c)
 add_library(graph src/graph.c)

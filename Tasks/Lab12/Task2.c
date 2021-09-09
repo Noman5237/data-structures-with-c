@@ -4,7 +4,7 @@
  * @date: 8/19/2021; 2:34 PM
  */
 
-#include <binarySearchTree.h>
+#include <bst.h>
 
 int main() {
 	

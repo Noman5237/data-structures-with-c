@@ -4,7 +4,7 @@
  * @date: 6/17/2021; 7:51 PM
  */
 
-#include <binarySearchTree.h>
+#include <bst.h>
 
 /* ============================== BST_NODE ========================= */
 
