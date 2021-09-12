@@ -18,10 +18,16 @@ add_executable(Test_Type_LL ll.c)
 target_link_libraries(Test_Type_LL ll primitivetypes ${CRITERION})
 
 add_executable(Test_Type_Stack stack.c)
-target_link_libraries(Test_Type_Stack stack ${CRITERION})
+target_link_libraries(Test_Type_Stack stack primitivetypes  ${CRITERION})
 
 add_executable(Test_Type_Queue queue.c)
-target_link_libraries(Test_Type_Queue queue ${CRITERION})
+target_link_libraries(Test_Type_Queue queue primitivetypes ${CRITERION})
 
 add_executable(Test_Type_BST bst.c)
 target_link_libraries(Test_Type_BST bst ${CRITERION})
+
+# ================================================== INTERFACES ================================================== #
+
+add_executable(Test_Type_List list.c)
+target_link_libraries(Test_Type_List ilistll primitivetypes ${CRITERION})
+

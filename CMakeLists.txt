@@ -43,6 +43,14 @@ add_library(map src/map.c)
 add_library(graph src/graph.c)
 target_link_libraries(graph map)
 
+# ================================================== INTERFACES ================================================== #
+
+add_library(ilist src/interfaces/list/list.c)
+target_link_libraries(ilist type)
+
+add_library(ilistll src/interfaces/list/ll.c)
+target_link_libraries(ilistll ll ilist)
+
 # ================================================== LIB TESTS ================================================== #
 
 add_subdirectory(Tests)
