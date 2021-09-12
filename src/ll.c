@@ -4,37 +4,37 @@
  * @date: 5/27/2021; 2:29 PM
  */
 
-#include <internals/list.h>
+#include <internals/ll.h>
 
 /* ============================== Runtime Registry ========================= */
 
-void t_list_register() {
-	if (t_list != NULL) {
+void t_ll_register() {
+	if (t_ll != NULL) {
 		return;
 	}
 	
-	t_list = type_new("List");
-	t_list->print = list_print;
-	t_list->destroyData = list_data_destroy;
+	t_ll = type_new("LinkedList");
+	t_ll->print = ll_print;
+	t_ll->destroyData = ll_data_destroy;
 }
 
-void t_list_deregister() {
-	if (t_list == NULL) {
+void t_ll_deregister() {
+	if (t_ll == NULL) {
 		return;
 	}
 	
-	type_destroy(t_list);
-	t_list = NULL;
+	type_destroy(t_ll);
+	t_ll = NULL;
 }
 
 /* ============================== Data Functions ========================= */
 
-ListNode *list_node_new(Any *datum) {
+LLNode *ll_node_new(Any *datum) {
 	//Declare a pointer to hold the address of a node
-	ListNode *node;
+	LLNode *node;
 	
 	//Allocate the memory and assign the value to the data and addresses
-	node = malloc(sizeof(ListNode));
+	node = malloc(sizeof(LLNode));
 	node->datum = datum;
 	node->prev = NULL;
 	node->next = NULL;
@@ -43,13 +43,13 @@ ListNode *list_node_new(Any *datum) {
 	return node;
 }
 
-void list_node_destroy(ListNode *node) {
+void ll_node_destroy(LLNode *node) {
 	any_destroy(node->datum);
 	free(node);
 }
 
-ListData *list_data_new() {
-	ListData *list = malloc(sizeof(ListData));
+LLData *ll_data_new() {
+	LLData *list = malloc(sizeof(LLData));
 	list->head = NULL;
 	list->tail = NULL;
 	list->size = 0;
@@ -57,12 +57,12 @@ ListData *list_data_new() {
 	return list;
 }
 
-void list_data_destroy(Any *this) {
-	ListData *list = this->data;
-	ListNode *current = list->head;
+void ll_data_destroy(Any *this) {
+	LLData *list = this->data;
+	LLNode *current = list->head;
 	
 	while (current != NULL) {
-		list_node_destroy(current);
+		ll_node_destroy(current);
 		current = current->next;
 	}
 	
@@ -71,15 +71,15 @@ void list_data_destroy(Any *this) {
 
 /* ============================== Core Type Functions ========================= */
 
-Any *List() {
-	ListData *list = list_data_new();
-	let this = any_new(list, t_list);
+Any *LinkedList() {
+	LLData *list = ll_data_new();
+	let this = any_new(list, t_ll);
 	return this;
 }
 
-void list_print(Any *this) {
-	ListData *list = this->data;
-	ListNode *current = list->head;
+void ll_print(Any *this) {
+	LLData *list = this->data;
+	LLNode *current = list->head;
 	
 	printf("[");
 	if (list->size > 0) {
@@ -98,43 +98,43 @@ void list_print(Any *this) {
 
 /* ============================== Advanced Type Functions ========================= */
 
-int list_size(Any *this) {
-	return list_data(this)->size;
+int ll_size(Any *this) {
+	return ll_data(this)->size;
 }
 
-int list_isEmpty(Any *this) {
-	return list_size(this) == 0;
+int ll_isEmpty(Any *this) {
+	return ll_size(this) == 0;
 }
 
-void list_append(Any *this, Any *newDatum) {
-	ListData *list = this->data;
-	ListNode *newNode = list_node_new(newDatum);
+void ll_append(Any *this, Any *newDatum) {
+	LLData *list = this->data;
+	LLNode *newNode = ll_node_new(newDatum);
 	if (list->tail == NULL) {
 		list->tail = newNode;
 		list->head = newNode;
 		++list->size;
 	} else {
-		list_insertAfter(list, list->tail, newNode);
+		ll_insertAfter(list, list->tail, newNode);
 	}
 }
 
-void list_insert(Any *this, int index, Any *newDatum) {
-	ListData *list = this->data;
-	ListNode *node = list_getNode(list, index);
+void ll_insert(Any *this, int index, Any *newDatum) {
+	LLData *list = this->data;
+	LLNode *node = ll_getNode(list, index);
 	if (node == NULL) {
 		return;
 	}
-	ListNode *newNode = list_node_new(newDatum);
-	list_insertBefore(list, node, newNode);
+	LLNode *newNode = ll_node_new(newDatum);
+	ll_insertBefore(list, node, newNode);
 }
 
-Any *list_get(Any *this, int index) {
-	ListNode *node = list_getNode(list_data(this), index);
+Any *ll_get(Any *this, int index) {
+	LLNode *node = ll_getNode(ll_data(this), index);
 	return node != NULL ? node->datum : NULL;
 }
 
-void list_set(Any *this, int index, Any *newDatum) {
-	ListNode *node = list_getNode(list_data(this), index);
+void ll_set(Any *this, int index, Any *newDatum) {
+	LLNode *node = ll_getNode(ll_data(this), index);
 	if (node == NULL) {
 		return;
 	}
@@ -142,18 +142,18 @@ void list_set(Any *this, int index, Any *newDatum) {
 	node->datum = newDatum;
 }
 
-void list_remove(Any *this, int index) {
-	ListData *list = this->data;
-	ListNode *node = list_getNode(list, index);
+void ll_remove(Any *this, int index) {
+	LLData *list = this->data;
+	LLNode *node = ll_getNode(list, index);
 	if (node == NULL) {
 		return;
 	}
 	
-	list_removeNode(list, node);
+	ll_removeNode(list, node);
 }
 
-int list_getIndexOf(Any *this, Any *itemToSearch) {
-	ListNode *current = list_data(this)->head;
+int ll_getIndexOf(Any *this, Any *itemToSearch) {
+	LLNode *current = ll_data(this)->head;
 	int index = 0;
 	
 	while (current != NULL) {
@@ -170,17 +170,17 @@ int list_getIndexOf(Any *this, Any *itemToSearch) {
 
 /* ============================== Helper Function ========================= */
 
-inline ListData *list_data(Any *this) {
-	return (ListData *) this->data;
+inline LLData *ll_data(Any *this) {
+	return (LLData *) this->data;
 }
 
-ListNode *list_getNode(ListData *list, int index) {
+LLNode *ll_getNode(LLData *list, int index) {
 	int size = list->size;
 	if (index < 0 || index >= size) {
 		return NULL;
 	}
 	
-	ListNode *node = list->head;
+	LLNode *node = list->head;
 	for (int i = 0; i < index; i++) {
 		node = node->next;
 	}
@@ -188,7 +188,7 @@ ListNode *list_getNode(ListData *list, int index) {
 	return node;
 }
 
-void list_insertBefore(ListData *list, ListNode *node, ListNode *newNode) {
+void ll_insertBefore(LLData *list, LLNode *node, LLNode *newNode) {
 	newNode->prev = node->prev;
 	newNode->next = node;
 	
@@ -202,7 +202,7 @@ void list_insertBefore(ListData *list, ListNode *node, ListNode *newNode) {
 	++list->size;
 }
 
-void list_insertAfter(ListData *list, ListNode *node, ListNode *newNode) {
+void ll_insertAfter(LLData *list, LLNode *node, LLNode *newNode) {
 	newNode->prev = node;
 	newNode->next = node->next;
 	
@@ -216,7 +216,7 @@ void list_insertAfter(ListData *list, ListNode *node, ListNode *newNode) {
 	++list->size;
 }
 
-void list_removeNode(ListData *list, ListNode *node) {
+void ll_removeNode(LLData *list, LLNode *node) {
 	if (list->size == 0) {
 		return;
 	}
@@ -233,6 +233,6 @@ void list_removeNode(ListData *list, ListNode *node) {
 		list->tail = node->prev;
 	}
 	
-	list_node_destroy(node);
+	ll_node_destroy(node);
 	--list->size;
 }

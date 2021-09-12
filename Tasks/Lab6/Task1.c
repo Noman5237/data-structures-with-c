@@ -5,40 +5,40 @@
  */
 
 #include <dscommon.h>
-#include <list.h>
+#include <ll.h>
 
 int main() {
 	
 	t_primitives_register();
-	t_list_register();
+	t_ll_register();
 	
-	let list = List();
+	let list = LinkedList();
 	
-	list_append(list, Int(1));
-	list_insert(list, 0, Int(2));
-	list_insert(list, list_size(list) - 1, Int(3));
-	list_append(list, Int(4));
-	list_insert(list, 1, Int(5));
-	list_append(list, Int(6));
+	ll_append(list, Int(1));
+	ll_insert(list, 0, Int(2));
+	ll_insert(list, ll_size(list) - 1, Int(3));
+	ll_append(list, Int(4));
+	ll_insert(list, 1, Int(5));
+	ll_append(list, Int(6));
 	
 	any_print(list);
 	
-	list_remove(list, 2);
+	ll_remove(list, 2);
 	any_print(list);
 	
-	list_remove(list, 4);
+	ll_remove(list, 4);
 	any_print(list);
 	
-	list_remove(list, 0);
+	ll_remove(list, 0);
 	any_print(list);
 	
-	list_remove(list, 2);
+	ll_remove(list, 2);
 	any_print(list);
 	
-	list_remove(list, list_size(list) - 1);
+	ll_remove(list, ll_size(list) - 1);
 	any_print(list);
 	
-	list_remove(list, 0);
+	ll_remove(list, 0);
 	any_print(list);
 	
 	any_destroy(list);
@@ -46,7 +46,7 @@ int main() {
 	printf("done");
 	
 	t_primitives_deregister();
-	t_list_deregister();
+	t_ll_deregister();
 	
 	return 0;
 }

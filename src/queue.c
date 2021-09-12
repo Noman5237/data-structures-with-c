@@ -6,7 +6,7 @@
 
 #include <queue.h>
 #include <dscommon.h>
-#include <internals/list.h>
+#include <internals/ll.h>
 
 /* ============================== Runtime Registry ========================= */
 
@@ -17,10 +17,10 @@ void t_queue_register() {
 		return;
 	}
 	
-	t_list_register();
+	t_ll_register();
 	t_queue = type_new("Queue");
-	t_queue->print = list_print;
-	t_queue->destroyData = list_data_destroy;
+	t_queue->print = ll_print;
+	t_queue->destroyData = ll_data_destroy;
 }
 
 void t_queue_deregister() {
@@ -35,29 +35,29 @@ void t_queue_deregister() {
 /* ============================== Core Type Functions ========================= */
 
 Any *Queue() {
-	ListData *queue = list_data_new();
+	LLData *queue = ll_data_new();
 	let this = any_new(queue, t_queue);
 	return this;
 }
 
 /* ============================== Advanced Type Functions ========================= */
 
-int (*queue_size)(Any *this) = list_size;
+int (*queue_size)(Any *this) = ll_size;
 
-int (*queue_isEmpty)(Any *this) = list_isEmpty;
+int (*queue_isEmpty)(Any *this) = ll_isEmpty;
 
 Any *queue_front(Any *this) {
-	return list_get(this, 0);
+	return ll_get(this, 0);
 }
 
 Any *queue_rear(Any *this) {
-	return list_get(this, queue_size(this) - 1);
+	return ll_get(this, queue_size(this) - 1);
 }
 
 void queue_enqueue(Any *this, Any *newDatum) {
-	list_append(this, newDatum);
+	ll_append(this, newDatum);
 }
 
 void queue_dequeue(Any *this) {
-	list_remove(this, 0);
+	ll_remove(this, 0);
 }

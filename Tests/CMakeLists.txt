@@ -14,8 +14,8 @@ target_link_libraries(Test_Type type ${CRITERION})
 add_executable(Test_Type_Int primitives/int.c)
 target_link_libraries(Test_Type_Int primitivetypes ${CRITERION})
 
-add_executable(Test_Type_List list.c)
-target_link_libraries(Test_Type_List list ${CRITERION})
+add_executable(Test_Type_LL ll.c)
+target_link_libraries(Test_Type_LL ll primitivetypes ${CRITERION})
 
 add_executable(Test_Type_Stack stack.c)
 target_link_libraries(Test_Type_Stack stack ${CRITERION})

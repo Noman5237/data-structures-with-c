@@ -28,14 +28,14 @@ add_library(type src/type.c)
 add_library(primitivetypes src/primitives/int.c)
 target_link_libraries(primitivetypes type)
 
-add_library(list src/list.c)
-target_link_libraries(list primitivetypes)
+add_library(ll src/ll.c)
+target_link_libraries(ll type)
 
 add_library(stack src/stack.c)
-target_link_libraries(stack list)
+target_link_libraries(stack ll)
 
 add_library(queue src/queue.c)
-target_link_libraries(queue list)
+target_link_libraries(queue ll)
 
 add_library(bst src/bst.c)
 add_library(heap src/heap.c)
