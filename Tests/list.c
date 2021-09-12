@@ -1,35 +1,39 @@
 /**
  * @file: list.c
  * @author: Anonyman637
- * @date: 9/8/2021; 2:07 AM
+ * @date: 9/12/2021; 12:05 AM
  */
 
 #include <criterion/criterion.h>
-#include <list.h>
 #include <dscommon.h>
+#include <interfaces/list/ll.h>
 
 void setup(void) {
 	t_primitives_register();
-	t_list_register();
+	t_ll_register();
+	i_list_register();
+	i_list_ll_register();
 }
 
 void teardown(void) {
 	t_primitives_deregister();
-	t_list_deregister();
+	i_list_ll_deregister();
+	i_list_deregister();
+	t_ll_deregister();
 }
 
-TestSuite(TypeList, .init = setup, .fini = teardown);
+TestSuite(TypeList_LL, .init = setup, .fini = teardown);
 
-Test(TypeList, TypeName) {
-	let list = List();
+Test(TypeList_LL, TypeName) {
+	let list = IList_LinkedList();
 	
 	cr_assert_str_eq(any_type(list), "List");
 	
 	any_destroy(list);
 }
 
-Test(TypeList, Empty) {
-	let list = List();
+Test(TypeList_LL, Empty) {
+	let list = IList_LinkedList();
 	
 	cr_assert_eq(list_isEmpty(list), 1);
 	list_append(list, Int(1));
@@ -38,8 +42,8 @@ Test(TypeList, Empty) {
 	any_destroy(list);
 }
 
-Test(TypeList, Append) {
-	let list = List();
+Test(TypeList_LL, Append) {
+	let list = IList_LinkedList();
 	
 	list_append(list, Int(1));
 	list_append(list, Int(2));
@@ -53,8 +57,8 @@ Test(TypeList, Append) {
 	any_destroy(list);
 }
 
-Test(TypeList, Insert) {
-	let list = List();
+Test(TypeList_LL, Insert) {
+	let list = IList_LinkedList();
 	
 	list_insert(list, 0, Int(1));
 	cr_assert_eq(list_size(list), 0);
@@ -74,8 +78,8 @@ Test(TypeList, Insert) {
 	any_destroy(list);
 }
 
-Test(TypeList, Get) {
-	let list = List();
+Test(TypeList_LL, Get) {
+	let list = IList_LinkedList();
 	
 	list_append(list, Int(2));
 	cr_assert_not_null(list_get(list, 0));
@@ -85,8 +89,8 @@ Test(TypeList, Get) {
 	any_destroy(list);
 }
 
-Test(TypeList, Set) {
-	let list = List();
+Test(TypeList_LL, Set) {
+	let list = IList_LinkedList();
 	
 	list_set(list, 0, Int(1));
 	cr_assert_eq(list_size(list), 0);
@@ -99,8 +103,8 @@ Test(TypeList, Set) {
 	any_destroy(list);
 }
 
-Test(TypeList, Remove) {
-	let list = List();
+Test(TypeList_LL, Remove) {
+	let list = IList_LinkedList();
 	
 	list_append(list, Int(1));
 	list_append(list, Int(2));
@@ -118,8 +122,8 @@ Test(TypeList, Remove) {
 	any_destroy(list);
 }
 
-Test(TypeList, GetIndexOf) {
-	let list = List();
+Test(TypeList_LL, GetIndexOf) {
+	let list = IList_LinkedList();
 	
 	list_append(list, Int(1));
 	list_append(list, Int(2));
@@ -133,18 +137,18 @@ Test(TypeList, GetIndexOf) {
 	any_destroy(list);
 }
 
-Test(TypeList, Print) {
-	let list = List();
+Test(TypeList_LL, Print) {
+	let list = IList_LinkedList();
 	
-	let item0 = List();
+	let item0 = IList_LinkedList();
 	list_append(item0, Int(0));
 	list_append(item0, Int(1));
 	list_append(item0, Int(2));
 	
-	let item1 = List();
-	list_append(item1, Int(4));
-	list_append(item1, Int(5));
-	list_append(item1, Int(6));
+	let item1 = LinkedList();
+	ll_append(item1, Int(4));
+	ll_append(item1, Int(5));
+	ll_append(item1, Int(6));
 	
 	list_append(list, item0);
 	list_append(list, Int(10));
