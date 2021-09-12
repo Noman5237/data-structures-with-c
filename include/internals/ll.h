@@ -9,12 +9,11 @@
 
 #include <dscommon.h>
 #include <ll.h>
-#include <internals/interfaces/list/list.h>
 
 /* ============================== List Node ========================= */
 
 struct LLNode {
-	Any *datum;
+	let datum;
 	
 	struct LLNode *prev;
 	struct LLNode *next;

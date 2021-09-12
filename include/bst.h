@@ -7,82 +7,34 @@
 #ifndef DATASTRUCTURESCOURSE_BST_H
 #define DATASTRUCTURESCOURSE_BST_H
 
-#include <dscommon.h>
+#include <type.h>
 
-/* ============================== BST_NODE ========================= */
+/* ============================== Runtime Registry ========================= */
 
-typedef struct BST_Node {
-	int data;
-	
-	struct BST_Node *parent;
-	struct BST_Node *leftChild;
-	struct BST_Node *rightChild;
-} BST_Node;
+Type *t_bst;
 
-BST_Node *bst_node_create(int data);
+void t_bst_register();
 
-/* ============================== BS TREE ========================= */
+void t_bst_deregister();
 
-typedef struct BST {
-	BST_Node *root;
-} BST;
+/* ============================== Core Type Functions ========================= */
 
-BST *bst_create();
+Any *BinarySearchTree();
 
-/* ============================== RECURSIVE ========================= */
+void bst_print(Any *this);
 
-BST_Node *bst_recursiveInsertNode(BST_Node *newNode, BST_Node *root);
+/* ============================== Advanced Type Functions ========================= */
 
-void bst_recursivePreOrderTraversal(BST_Node *root);
+int bst_size(Any *this);
 
-void bst_recursiveInOrderTraversal(BST_Node *root);
+int bst_isEmpty(Any *this);
 
-void bst_recursivePostOrderTraversal(BST_Node *root);
+void bst_append(Any *this, Any *newDatum);
 
-BST_Node *bst_recursiveSearch(int data, BST_Node *root);
+Any *bst_get(Any *this, int index);
 
-BST_Node *bst_recursiveMaximum(BST_Node *root);
+void bst_remove(Any *this, int index);
 
-BST_Node *bst_recursiveMinimum(BST_Node *root);
-
-BST_Node *bst_recursiveInOrderPredecessor(BST_Node *node);
-
-BST_Node *bst_recursiveInOrderSuccessor(BST_Node *node);
-
-BST_Node *bst_recursiveDeleteNode(BST_Node *node, BST_Node *root);
-
-void bst_recursiveFree(BST_Node *root);
-
-/* ============================== ITERATIVE ========================= */
-
-void bst_insertNode(BST_Node *newNode, BST *tree);
-
-void bst_preOrderTraversal(BST *tree);
-
-void bst_inOrderTraversal(BST *tree);
-
-void bst_postOrderTraversal(BST *tree);
-
-BST_Node *bst_search(int data, BST *tree);
-
-BST_Node *bst_maximum(BST_Node *root);
-
-BST_Node *bst_minimum(BST_Node *root);
-
-BST_Node *bst_InOrderPredecessor(BST_Node *node);
-
-BST_Node *bst_InOrderSuccessor(BST_Node *node);
-
-void bst_deleteNode(BST_Node *node, BST *tree);
-
-void bst_free(BST *tree);
-
-/* ============================== UTILITY ========================= */
-
-void bst_transplantNode(BST_Node *transplanter, BST_Node *node, BST *tree);
-
-BST_Node bst_leftRotate(BST_Node *node);
-
-BST_Node bst_rightRotate(BST_Node *node);
+int bst_getIndexOf(Any *this, Any *itemToSearch);
 
 #endif //DATASTRUCTURESCOURSE_BST_H

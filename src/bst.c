@@ -4,35 +4,112 @@
  * @date: 6/17/2021; 7:51 PM
  */
 
-#include <bst.h>
+#include <internals/bst.h>
+
+/* ============================== Runtime Registry ========================= */
+
+Type *t_bst;
+
+void t_bst_register() {
+	if (t_bst != NULL) {
+		return;
+	}
+	
+	t_bst = type_new("BinarySearchTree");
+	t_bst->print = bst_print;
+	t_bst->destroyData = bst_data_destroy;
+}
+
+void t_bst_deregister() {
+	if (t_bst == NULL) {
+		return;
+	}
+	
+	type_destroy(t_bst);
+	t_bst = NULL;
+}
 
 /* ============================== BST_NODE ========================= */
 
-BST_Node *bst_node_create(int data) {
-	BST_Node *newNode = malloc(sizeof(BST_Node));
-	if (newNode) {
-		newNode->data = data;
-		newNode->parent = NULL;
-		newNode->leftChild = NULL;
-		newNode->rightChild = NULL;
-	}
+BSTNode *bst_node_new(Any *datum) {
+	BSTNode *newNode = malloc(sizeof(BSTNode));
+	newNode->datum = datum;
+	newNode->parent = NULL;
+	newNode->leftChild = NULL;
+	newNode->rightChild = NULL;
 	
 	return newNode;
 }
 
+void bst_node_destroy(BSTNode *node) {
+	any_destroy(node->datum);
+	free(node);
+}
+
 /* ============================== BS TREE ========================= */
 
-BST *bst_create() {
-	BST *tree = malloc(sizeof(BST));
-	if (tree) {
-		tree->root = NULL;
-	}
+BSTData *bst_data_new() {
+	BSTData *tree = malloc(sizeof(BSTData));
+	tree->root = NULL;
 	
 	return tree;
 }
 
+void bst_data_destroy(Any *this) {
+	BSTData *tree = this->data;
+	bst_recursiveDestroy(tree->root);
+	free(tree);
+}
+
+/* ============================== Core Type Functions ========================= */
+
+Any *BinarySearchTree() {
+	BSTData *tree = bst_data_new();
+	let this = any_new(tree, t_bst);
+	return this;
+}
+
+void bst_print(Any *this) {
+	BSTData *tree = this->data;
+	
+	printf("[");
+	bst_recursiveInOrderTraversal(tree->root);
+	printf("]");
+}
+
+/* ============================== Advanced Type Functions ========================= */
+
+int bst_size(Any *this) {
+	return 0;
+}
+
+int bst_isEmpty(Any *this) {
+	return 1;
+}
+
+void bst_append(Any *this, Any *newDatum) {
+	BSTData *tree = this->data;
+	BSTNode *newNode = bst_node_new(newDatum);
+	tree->root = bst_recursiveInsertNode(tree->root, newNode);
+}
+
+Any *bst_get(Any *this, int index) {
+	return NULL;
+}
+
+void bst_remove(Any *this, int index) {
+
+}
+
+int bst_getIndexOf(Any *this, Any *itemToSearch) {
+	return -1;
+}
+
+/* ============================== Helper Functions ========================= */
+
 /* ============================== RECURSIVE ========================= */
-BST_Node *bst_recursiveInsertNode(BST_Node *newNode, BST_Node *root) {
+
+BSTNode *bst_recursiveInsertNode(BSTNode *root, BSTNode *newNode) {
 	if (root == NULL) {
 		root = newNode;
 		return root;
@@ -40,60 +117,67 @@ BST_Node *bst_recursiveInsertNode(BST_Node *newNode, BST_Node *root) {
 	
 	newNode->parent = root;
 	
-	if (newNode->data < root->data) {
-		root->leftChild = bst_recursiveInsertNode(newNode, root->leftChild);
+	if (any_compare(newNode->datum, root->datum) < 0) {
+		root->leftChild = bst_recursiveInsertNode(root->leftChild, newNode);
 	} else {
-		root->rightChild = bst_recursiveInsertNode(newNode, root->rightChild);
+		root->rightChild = bst_recursiveInsertNode(root->rightChild, newNode);
 	}
 	
 	return root;
 }
 
-void bst_recursivePreOrderTraversal(BST_Node *root) {
+void bst_recursivePreOrderTraversal(BSTNode *root) {
 	if (root == NULL) {
 		return;
 	}
 	
-	printf("%d ", root->data);
+	any_print(root->datum);
+	printf(", ");
+	
 	bst_recursivePreOrderTraversal(root->leftChild);
 	bst_recursivePreOrderTraversal(root->rightChild);
 }
 
-void bst_recursiveInOrderTraversal(BST_Node *root) {
+void bst_recursiveInOrderTraversal(BSTNode *root) {
 	if (root == NULL) {
 		return;
 	}
 	
 	bst_recursiveInOrderTraversal(root->leftChild);
-	printf("%d ", root->data);
-	bst_recursiveInOrderTraversal(root->rightChild);
 	
+	any_print(root->datum);
+	printf(", ");
+	
+	bst_recursiveInOrderTraversal(root->rightChild);
 }
 
-void bst_recursivePostOrderTraversal(BST_Node *root) {
-	
+void bst_recursivePostOrderTraversal(BSTNode *root) {
 	if (root == NULL) {
 		return;
 	}
 	
 	bst_recursivePostOrderTraversal(root->leftChild);
 	bst_recursivePostOrderTraversal(root->rightChild);
-	printf("%d ", root->data);
 	
+	any_print(root->datum);
+	printf(", ");
 }
 
-BST_Node *bst_recursiveSearch(int data, BST_Node *root) {
-	if (root == NULL || root->data == data) {
+BSTNode *bst_recursiveSearch(BSTNode *root, Any *itemToSearch) {
+	if (root == NULL || any_compare(root->datum, itemToSearch) == 0) {
 		return root;
-	} else if (data < root->data) {
-		return bst_recursiveSearch(data, root->leftChild);
+	} else if (any_compare(itemToSearch, root->datum) < 0) {
+		return bst_recursiveSearch(root->leftChild, itemToSearch);
 	} else {
-		return bst_recursiveSearch(data, root->rightChild);
+		return bst_recursiveSearch(root->rightChild, itemToSearch);
+	}
+}
+
+BSTNode *bst_recursiveMaximum(BSTNode *root) {
+	if (root == NULL) {
+		return NULL;
 	}
 	
-}
-
-BST_Node *bst_recursiveMaximum(BST_Node *root) {
 	if (root->rightChild != NULL) {
 		return bst_recursiveMaximum(root->rightChild);
 	}
@@ -101,7 +185,10 @@ BST_Node *bst_recursiveMaximum(BST_Node *root) {
 	return root;
 }
 
-BST_Node *bst_recursiveMinimum(BST_Node *root) {
+BSTNode *bst_recursiveMinimum(BSTNode *root) {
+	if (root == NULL) {
+		return NULL;
+	}
 	
 	if (root->leftChild != NULL) {
 		return bst_recursiveMaximum(root->leftChild);
@@ -110,27 +197,34 @@ BST_Node *bst_recursiveMinimum(BST_Node *root) {
 	return root;
 }
 
-BST_Node *bst_recursiveInOrderPredecessor(BST_Node *node) {
+BSTNode *bst_recursiveInOrderPredecessor(BSTNode *node) {
+	if (node == NULL) {
+		return NULL;
+	}
+	
 	if (node->leftChild != NULL) {
 		return bst_recursiveMaximum(node->leftChild);
 	}
 	
-	BST_Node *ancestor = node->parent;
+	BSTNode *ancestor = node->parent;
 	while (ancestor->leftChild == node) {
 		node = ancestor;
 		ancestor = ancestor->parent;
 	}
 	
 	return ancestor;
-	
 }
 
-BST_Node *bst_recursiveInOrderSuccessor(BST_Node *node) {
+BSTNode *bst_recursiveInOrderSuccessor(BSTNode *node) {
+	if (node == NULL) {
+		return NULL;
+	}
+	
 	if (node->rightChild != NULL) {
 		return bst_recursiveMinimum(node->rightChild);
 	}
 	
-	BST_Node *ancestor = node->parent;
+	BSTNode *ancestor = node->parent;
 	while (ancestor->rightChild == node) {
 		node = ancestor;
 		ancestor = ancestor->parent;
@@ -139,179 +233,211 @@ BST_Node *bst_recursiveInOrderSuccessor(BST_Node *node) {
 	return ancestor;
 }
 
-BST_Node *bst_recursiveDeleteNode(BST_Node *node, BST_Node *root) {
-
-}
-
-void bst_recursiveFree(BST_Node *root) {
-	if (root->leftChild != NULL) {
-		bst_recursiveFree(root->leftChild);
+BSTNode *bst_recursiveRemoveNode(BSTNode *root, BSTNode *node) {
+	if (root == NULL) {
+		return NULL;
 	}
 	
-	if (root->rightChild != NULL) {
-		bst_recursiveFree(root->rightChild);
+	if (any_compare(node->datum, root->datum) < 0) {
+		root->leftChild = bst_recursiveRemoveNode(root->leftChild, node);
+	} else if (any_compare(node->datum, root->datum) > 0) {
+		root->rightChild = bst_recursiveRemoveNode(root->rightChild, node);
+	} else {
+		BSTNode *replacer;
+		if (root->leftChild == NULL) {
+			replacer = root->rightChild;
+			bst_node_destroy(root);
+			return replacer;
+		}
+		
+		if (root->rightChild == NULL) {
+			replacer = root->leftChild;
+			bst_node_destroy(root);
+			return replacer;
+		}
+		
+		// local in order successor
+		replacer = bst_recursiveMinimum(root->rightChild);
+		root->datum = replacer->datum;
+		root->rightChild = bst_recursiveRemoveNode(root->rightChild, replacer);
 	}
 	
-	free(root);
+	return root;
 }
 
-/* ============================== ITERATIVE ========================= */
-
-void bst_insertNode(BST_Node *newNode, BST *tree) {
-	if (tree->root == NULL) {
-		tree->root = newNode;
+void bst_recursiveDestroy(BSTNode *root) {
+	if (root == NULL) {
 		return;
 	}
 	
-	BST_Node *parent = tree->root;
-	while (true) {
-		if (parent->leftChild != NULL && newNode->data < parent->data) {
-			parent = parent->leftChild;
-		} else if (parent->rightChild != NULL && newNode->data >= parent->data) {
-			parent = parent->rightChild;
-		} else {
-			break;
-		}
+	if (root->leftChild != NULL) {
+		bst_recursiveDestroy(root->leftChild);
 	}
 	
-	newNode->parent = parent;
-	if (newNode->data < parent->data) {
-		parent->leftChild = newNode;
-	} else {
-		parent->rightChild = newNode;
+	if (root->rightChild != NULL) {
+		bst_recursiveDestroy(root->rightChild);
 	}
+	
+	bst_node_destroy(root);
 }
 
-void bst_preOrderTraversal(BST *root) {
-
-}
-
-void bst_inOrderTraversal(BST *root) {}
-
-void bst_postOrderTraversal(BST *root) {}
-
-BST_Node *bst_search(int data, BST *tree) {
-	BST_Node *root = tree->root;
-	
-	while (root != NULL && root->data != data) {
-		if (data < root->data) {
-			root = root->leftChild;
-		} else {
-			root = root->rightChild;
-		}
-	}
-	
-	return root;
-}
-
-BST_Node *bst_maximum(BST_Node *root) {
-	while (root->rightChild) {
-		root = root->rightChild;
-	}
-	
-	return root;
-}
-
-BST_Node *bst_minimum(BST_Node *root) {
-	while (root->leftChild) {
-		root = root->leftChild;
-	}
-	
-	return root;
-}
-
-BST_Node *bst_InOrderPredecessor(BST_Node *node) {
-	if (node->leftChild != NULL) {
-		return bst_maximum(node->leftChild);
-	}
-	
-	BST_Node *ancestor = node->parent;
-	while (ancestor->leftChild == node) {
-		node = ancestor;
-		ancestor = ancestor->parent;
-	}
-	
-	return ancestor;
-}
-
-BST_Node *bst_InOrderSuccessor(BST_Node *node) {
-	
-	if (node->rightChild != NULL) {
-		return bst_maximum(node->rightChild);
-	}
-	
-	BST_Node *ancestor = node->parent;
-	while (ancestor->rightChild == node) {
-		node = ancestor;
-		ancestor = ancestor->parent;
-	}
-	
-	return ancestor;
-}
-
-void bst_deleteNode(BST_Node *node, BST *tree) {
-	if (node->leftChild == NULL) {
-		bst_transplantNode(node->rightChild, node, tree);
-	} else if (node->rightChild == NULL) {
-		bst_transplantNode(node->leftChild, node, tree);
-	} else {
-		BST_Node *nodeLocalSuccessor = bst_minimum(node->rightChild);
-		
-		if (nodeLocalSuccessor->parent != node) {
-			// If the local successor is the right child of node
-			// then the following lines do not have any effect on deleting on
-			// and we can skip this lines and replace node with its right child directly
-			bst_transplantNode(nodeLocalSuccessor->rightChild, nodeLocalSuccessor, tree);
-			nodeLocalSuccessor->rightChild = node->rightChild;
-			node->rightChild->parent = nodeLocalSuccessor;
-		}
-		
-		bst_transplantNode(nodeLocalSuccessor, node, tree);
-		nodeLocalSuccessor->leftChild = node->leftChild;
-		node->leftChild->parent = nodeLocalSuccessor;
-	}
-	
-	free(node);
-}
-
-void bst_free(BST *tree) {
-	BST_Node *child = tree->root;
-	BST_Node *parent = child->parent;
-	
-	do {
-		if (child->leftChild != NULL) {
-			parent = child;
-			child = parent->leftChild;
-			parent->leftChild = NULL;
-			continue;
-		}
-		
-		if (child->rightChild != NULL) {
-			parent = child;
-			child = parent->rightChild;
-			parent->rightChild = NULL;
-			continue;
-		}
-		
-		free(child);
-		child = parent;
-		parent = child->parent;
-		
-	} while (parent);
-}
-
-/* ============================== UTILITY ========================= */
-
-void bst_transplantNode(BST_Node *transplanter, BST_Node *node, BST *tree) {
-	if (node->parent == NULL) {
-		tree->root = transplanter;
-	} else if (node == node->parent->leftChild) {
-		node->parent->leftChild = transplanter;
-	} else {
-		node->parent->rightChild = transplanter;
-	}
-	
-	if (transplanter != NULL) {
-		transplanter->parent = node->parent;
-	}
-}
+///* ============================== ITERATIVE ========================= */
+//
+//void bst_insertNode(BSTNode *newNode, BSTData *tree) {
+//	if (tree->root == NULL) {
+//		tree->root = newNode;
+//		return;
+//	}
+//
+//	BSTNode *parent = tree->root;
+//	while (true) {
+//		if (parent->leftChild != NULL && newNode->datum < parent->datum) {
+//			parent = parent->leftChild;
+//		} else if (parent->rightChild != NULL && newNode->datum >= parent->datum) {
+//			parent = parent->rightChild;
+//		} else {
+//			break;
+//		}
+//	}
+//
+//	newNode->parent = parent;
+//	if (newNode->datum < parent->datum) {
+//		parent->leftChild = newNode;
+//	} else {
+//		parent->rightChild = newNode;
+//	}
+//}
+//
+//void bst_preOrderTraversal(BSTData *root) {
+//
+//}
+//
+//void bst_inOrderTraversal(BSTData *root) {}
+//
+//void bst_postOrderTraversal(BSTData *root) {}
+//
+//BSTNode *bst_search(int datum, BSTData *tree) {
+//	BSTNode *root = tree->root;
+//
+//	while (root != NULL && root->datum != datum) {
+//		if (datum < root->datum) {
+//			root = root->leftChild;
+//		} else {
+//			root = root->rightChild;
+//		}
+//	}
+//
+//	return root;
+//}
+//
+//BSTNode *bst_maximum(BSTNode *root) {
+//	while (root->rightChild) {
+//		root = root->rightChild;
+//	}
+//
+//	return root;
+//}
+//
+//BSTNode *bst_minimum(BSTNode *root) {
+//	while (root->leftChild) {
+//		root = root->leftChild;
+//	}
+//
+//	return root;
+//}
+//
+//BSTNode *bst_InOrderPredecessor(BSTNode *node) {
+//	if (node->leftChild != NULL) {
+//		return bst_maximum(node->leftChild);
+//	}
+//
+//	BSTNode *ancestor = node->parent;
+//	while (ancestor->leftChild == node) {
+//		node = ancestor;
+//		ancestor = ancestor->parent;
+//	}
+//
+//	return ancestor;
+//}
+//
+//BSTNode *bst_InOrderSuccessor(BSTNode *node) {
+//
+//	if (node->rightChild != NULL) {
+//		return bst_maximum(node->rightChild);
+//	}
+//
+//	BSTNode *ancestor = node->parent;
+//	while (ancestor->rightChild == node) {
+//		node = ancestor;
+//		ancestor = ancestor->parent;
+//	}
+//
+//	return ancestor;
+//}
+//
+//void bst_deleteNode(BSTNode *node, BSTData *tree) {
+//	if (node->leftChild == NULL) {
+//		bst_transplantNode(node->rightChild, node, tree);
+//	} else if (node->rightChild == NULL) {
+//		bst_transplantNode(node->leftChild, node, tree);
+//	} else {
+//		BSTNode *nodeLocalSuccessor = bst_minimum(node->rightChild);
+//
+//		if (nodeLocalSuccessor->parent != node) {
+//			// If the local successor is the right child of node
+//			// then the following lines do not have any effect on deleting on
+//			// and we can skip this lines and replace node with its right child directly
+//			bst_transplantNode(nodeLocalSuccessor->rightChild, nodeLocalSuccessor, tree);
+//			nodeLocalSuccessor->rightChild = node->rightChild;
+//			node->rightChild->parent = nodeLocalSuccessor;
+//		}
+//
+//		bst_transplantNode(nodeLocalSuccessor, node, tree);
+//		nodeLocalSuccessor->leftChild = node->leftChild;
+//		node->leftChild->parent = nodeLocalSuccessor;
+//	}
+//
+//	free(node);
+//}
+//
+//void bst_free(BSTData *tree) {
+//	BSTNode *child = tree->root;
+//	BSTNode *parent = child->parent;
+//
+//	do {
+//		if (child->leftChild != NULL) {
+//			parent = child;
+//			child = parent->leftChild;
+//			parent->leftChild = NULL;
+//			continue;
+//		}
+//
+//		if (child->rightChild != NULL) {
+//			parent = child;
+//			child = parent->rightChild;
+//			parent->rightChild = NULL;
+//			continue;
+//		}
+//
+//		free(child);
+//		child = parent;
+//		parent = child->parent;
+//
+//	} while (parent);
+//}
+//
+///* ============================== UTILITY ========================= */
+//
+//void bst_transplantNode(BSTNode *transplanter, BSTNode *node, BSTData *tree) {
+//	if (node->parent == NULL) {
+//		tree->root = transplanter;
+//	} else if (node == node->parent->leftChild) {
+//		node->parent->leftChild = transplanter;
+//	} else {
+//		node->parent->rightChild = transplanter;
+//	}
+//
+//	if (transplanter != NULL) {
+//		transplanter->parent = node->parent;
+//	}
+//}

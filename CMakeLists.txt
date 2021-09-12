@@ -38,6 +38,8 @@ add_library(queue src/queue.c)
 target_link_libraries(queue ll)
 
 add_library(bst src/bst.c)
+target_link_libraries(bst type)
+
 add_library(heap src/heap.c)
 add_library(map src/map.c)
 add_library(graph src/graph.c)
