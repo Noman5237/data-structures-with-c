@@ -21,7 +21,7 @@ add_executable(L4T1 Lab4/Task1.c)
 add_executable(L5T1 Lab5/Task1.c)
 
 add_executable(L6T1 Lab6/Task1.c)
-target_link_libraries(L6T1 list)
+target_link_libraries(L6T1 ll)
 add_executable(L6T2 Lab6/Task2.c)
 target_link_libraries(L6T2 stack)
 add_executable(L6T3 Lab6/Task3.c)
