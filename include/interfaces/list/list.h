@@ -39,6 +39,10 @@ void list_set(Any *this, int index, Any *newDatum);
 
 void list_remove(Any *this, int index);
 
+void list_removeItem(Any *this, Any *itemToRemove);
+
+Any *list_search(Any *this, Any *itemToSearch);
+
 int list_getIndexOf(Any *this, Any *itemToSearch);
 
 #endif //DATASTRUCTURESCOURSE_INTERFACE_LIST_H

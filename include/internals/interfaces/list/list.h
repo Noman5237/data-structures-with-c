@@ -32,6 +32,10 @@ struct IList {
 	
 	void (*remove)(Any *this, int index);
 	
+	void (*removeItem)(Any *this, Any *itemToRemove);
+	
+	Any *(*search)(Any *this, Any *itemToSearch);
+	
 	int (*getIndexOf)(Any *this, Any *itemToSearch);
 	
 	void (*destroy)(IListInstance *instance);

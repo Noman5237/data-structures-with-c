@@ -83,6 +83,16 @@ void list_remove(Any *this, int index) {
 	instance->functions->remove(instance->list, index);
 }
 
+void list_removeItem(Any *this, Any *itemToRemove) {
+	IListInstance *instance = this->data;
+	instance->functions->removeItem(instance->list, itemToRemove);
+}
+
+Any *list_search(Any *this, Any *itemToSearch) {
+	IListInstance *instance = this->data;
+	return instance->functions->search(instance->list, itemToSearch);
+}
+
 int list_getIndexOf(Any *this, Any *itemToSearch) {
 	IListInstance *instance = this->data;
 	return instance->functions->getIndexOf(instance->list, itemToSearch);
