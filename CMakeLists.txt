@@ -53,6 +53,9 @@ target_link_libraries(ilist type)
 add_library(ilistll src/interfaces/list/ll.c)
 target_link_libraries(ilistll ll ilist)
 
+add_library(ilistbst src/interfaces/list/bst.c)
+target_link_libraries(ilistbst bst ilist)
+
 # ================================================== LIB TESTS ================================================== #
 
 add_subdirectory(Tests)

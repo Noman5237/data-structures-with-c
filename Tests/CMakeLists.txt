@@ -28,6 +28,8 @@ target_link_libraries(Test_Type_BST bst primitivetypes ${CRITERION})
 
 # ================================================== INTERFACES ================================================== #
 
-add_executable(Test_Type_List list.c)
-target_link_libraries(Test_Type_List ilistll primitivetypes ${CRITERION})
+add_executable(Test_Type_List_LL interfaces/list/ll.c)
+target_link_libraries(Test_Type_List_LL ilistll primitivetypes ${CRITERION})
 
+add_executable(Test_Type_List_BST interfaces/list/bst.c)
+target_link_libraries(Test_Type_List_BST ilistbst primitivetypes ${CRITERION})
