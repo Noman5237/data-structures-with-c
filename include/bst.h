@@ -35,6 +35,10 @@ Any *bst_get(Any *this, int index);
 
 void bst_remove(Any *this, int index);
 
+void bst_removeItem(Any *this, Any *itemToRemove);
+
 int bst_getIndexOf(Any *this, Any *itemToSearch);
+
+Any *bst_search(Any *this, Any *itemToSearch);
 
 #endif //DATASTRUCTURESCOURSE_BST_H

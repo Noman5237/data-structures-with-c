@@ -24,6 +24,7 @@ typedef struct BSTNode {
 
 typedef struct BSTData {
 	BSTNode *root;
+	int size;
 } BSTData;
 
 /* ============================== Data Functions ========================= */
@@ -48,6 +49,8 @@ void bst_recursiveInOrderTraversal(BSTNode *root);
 
 void bst_recursivePostOrderTraversal(BSTNode *root);
 
+BSTNode *bst_recursiveGet(BSTNode *root, int index);
+
 BSTNode *bst_recursiveSearch(BSTNode *root, Any *itemToSearch);
 
 BSTNode *bst_recursiveMaximum(BSTNode *root);
@@ -56,42 +59,48 @@ BSTNode *bst_recursiveMinimum(BSTNode *root);
 
 BSTNode *bst_recursiveInOrderPredecessor(BSTNode *node);
 
-__attribute__((unused)) BSTNode *bst_recursiveInOrderSuccessor(BSTNode *node);
+BSTNode *bst_recursiveInOrderSuccessor(BSTNode *node);
 
-BSTNode *bst_recursiveRemoveNode(BSTNode *root, BSTNode *node);
+BSTNode *bst_recursiveRemoveNode(BSTNode *node);
 
 void bst_recursiveDestroy(BSTNode *root);
 
-/* ============================== ITERATIVE ========================= */
+int bst_recursiveGetIndexOf(BSTNode *root, Any *itemToSearch);
 
-void bst_insertNode(BSTNode *newNode, BSTData *tree);
+/* ============================== Utility ========================= */
 
-void bst_preOrderTraversal(BSTData *tree);
+void bst_recursiveReplaceNode(BSTNode *node, BSTNode *replacer);
 
-void bst_inOrderTraversal(BSTData *tree);
-
-void bst_postOrderTraversal(BSTData *tree);
-
-BSTNode *bst_search(int data, BSTData *tree);
-
-BSTNode *bst_maximum(BSTNode *root);
-
-BSTNode *bst_minimum(BSTNode *root);
-
-BSTNode *bst_InOrderPredecessor(BSTNode *node);
-
-BSTNode *bst_InOrderSuccessor(BSTNode *node);
-
-void bst_deleteNode(BSTNode *node, BSTData *tree);
-
-void bst_free(BSTData *tree);
-
-/* ============================== UTILITY ========================= */
-
-void bst_transplantNode(BSTNode *transplanter, BSTNode *node, BSTData *tree);
-
-BSTNode bst_leftRotate(BSTNode *node);
-
-BSTNode bst_rightRotate(BSTNode *node);
+///* ============================== ITERATIVE ========================= */
+//
+//void bst_insertNode(BSTNode *newNode, BSTData *tree);
+//
+//void bst_preOrderTraversal(BSTData *tree);
+//
+//void bst_inOrderTraversal(BSTData *tree);
+//
+//void bst_postOrderTraversal(BSTData *tree);
+//
+//BSTNode *bst_search(int data, BSTData *tree);
+//
+//BSTNode *bst_maximum(BSTNode *root);
+//
+//BSTNode *bst_minimum(BSTNode *root);
+//
+//BSTNode *bst_InOrderPredecessor(BSTNode *node);
+//
+//BSTNode *bst_InOrderSuccessor(BSTNode *node);
+//
+//void bst_deleteNode(BSTNode *node, BSTData *tree);
+//
+//void bst_free(BSTData *tree);
+//
+///* ============================== UTILITY ========================= */
+//
+//void bst_transplantNode(BSTNode *transplanter, BSTNode *node, BSTData *tree);
+//
+//BSTNode bst_leftRotate(BSTNode *node);
+//
+//BSTNode bst_rightRotate(BSTNode *node);
 
 #endif //DATASTRUCTURESCOURSE_INTERNAL_BST_H
