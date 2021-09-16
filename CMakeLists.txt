@@ -19,8 +19,12 @@ message("static lib dir:        ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
 
 # ================================================== RESOURCES ================================================== #
 
+# ================================================== INTERFACES ================================================== #
 
-# ================================================== LIBRARIES ================================================== #
+add_library(ilist src/interfaces/list/list.c)
+target_link_libraries(ilist type)
+
+# ================================================== DT ================================================== #
 
 include_directories(include)
 
@@ -40,21 +44,25 @@ target_link_libraries(queue ll)
 add_library(bst src/bst.c)
 target_link_libraries(bst type)
 
-add_library(heap src/heap.c)
 add_library(map src/map.c)
+target_link_libraries(map type ilist)
+
+add_library(heap src/heap.c)
 add_library(graph src/graph.c)
 target_link_libraries(graph map)
 
-# ================================================== INTERFACES ================================================== #
-
-add_library(ilist src/interfaces/list/list.c)
-target_link_libraries(ilist type)
+# ================================================== INTERFACES IMPLEMENTATIONS ================================================== #
 
 add_library(ilistll src/interfaces/list/ll.c)
 target_link_libraries(ilistll ll ilist)
 
 add_library(ilistbst src/interfaces/list/bst.c)
 target_link_libraries(ilistbst bst ilist)
+
+# ================================================== ALGO ================================================== #
+
+add_library(fnvhash src/algorithms/hash/fnv.c)
+target_link_libraries(fnvhash type)
 
 # ================================================== LIB TESTS ================================================== #
 
