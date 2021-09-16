@@ -12,7 +12,7 @@ void i_list_ll_register() {
 	if (i_list_ll != NULL) {
 		return;
 	}
-	i_list_functions_new();
+	i_list_ll_functions_new();
 }
 
 void i_list_ll_deregister() {
@@ -33,11 +33,11 @@ Any *IList_LinkedList() {
 	return this;
 }
 
-void IList_Destroy(IListInstance *instance) {
+void IList_LinkedListDestroy(IListInstance *instance) {
 	any_destroy(instance->list);
 }
 
-void i_list_functions_new() {
+void i_list_ll_functions_new() {
 	i_list_ll = malloc(sizeof(IList));
 	i_list_ll->print = ll_print;
 	i_list_ll->size = ll_size;
@@ -48,5 +48,5 @@ void i_list_functions_new() {
 	i_list_ll->set = ll_set;
 	i_list_ll->remove = ll_remove;
 	i_list_ll->getIndexOf = ll_getIndexOf;
-	i_list_ll->destroy = IList_Destroy;
+	i_list_ll->destroy = IList_LinkedListDestroy;
 }

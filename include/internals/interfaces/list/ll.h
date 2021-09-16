@@ -8,14 +8,15 @@
 #define DATASTRUCTURESCOURSE_INTERNAL_INTERFACE_LIST_LL_H
 
 #include <interfaces/list/ll.h>
+#include <internals/interfaces/list/list.h>
 #include <internals/ll.h>
 
 /* ============================== Interface Implementation ========================= */
 
 IList *i_list_ll;
 
-void IList_Destroy(IListInstance *instance);
+void IList_LinkedListDestroy(IListInstance *instance);
 
-void i_list_functions_new();
+void i_list_ll_functions_new();
 
 #endif //DATASTRUCTURESCOURSE_INTERNAL_INTERFACE_LIST_LL_H

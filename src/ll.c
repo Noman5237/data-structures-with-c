@@ -157,7 +157,7 @@ int ll_getIndexOf(Any *this, Any *itemToSearch) {
 	int index = 0;
 	
 	while (current != NULL) {
-		if (!any_compare(current->datum, itemToSearch)) {
+		if (any_compare(current->datum, itemToSearch) == 0) {
 			return index;
 		}
 		
