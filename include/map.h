@@ -19,7 +19,7 @@ void t_map_deregister();
 
 /* ============================== Core Type Functions ========================= */
 
-Any *Map(Any *iList, Any *(*hashFunction)(Any *key));
+Any *Map(Any *iList);
 
 void map_print(Any *map);
 
@@ -27,9 +27,11 @@ void map_print(Any *map);
 
 int map_size(Any *this);
 
-void map_set(Any *this, Any *key, Any *value);
+void map_put(Any *this, Any *key, Any *value);
 
 Any *map_get(Any *this, Any *key);
+
+Any *map_getKeys(Any *this);
 
 void map_remove(Any *this, Any *key);
 

@@ -9,7 +9,7 @@
 
 #include <dscommon.h>
 #include <map.h>
-#include <interfaces/list/list.h>
+#include <internals/interfaces/list/list.h>
 
 /* ============================== Map Item ========================= */
 
@@ -17,13 +17,12 @@ Type *t_map_item;
 
 struct MapItemData {
 	Any *key;
-	Any *hash;
 	Any *value;
 };
 
 typedef struct MapItemData MapItemData;
 
-Any *MapItem(Any *key, Any *value, Any *hash);
+Any *MapItem(Any *key, Any *value);
 
 int map_item_data_compare(Any *this, Any *other);
 
@@ -35,19 +34,17 @@ void map_item_data_destroy(Any *this);
 
 struct MapData {
 	Any *list;
-	
-	Any *(*computeHash)(Any *key);
-	
-	int size;
 };
 
 typedef struct MapData MapData;
 
-MapData *map_data_new(Any *iList, Any *(*hashFunction)(Any *key));
+MapData *map_data_new(Any *iList);
 
 void map_data_destroy(Any *this);
 
 /* ============================== Helper Functions ========================= */
+
+MapItemData *map_getItem(MapData *map, Any *key);
 
 #endif // DATASTRUCTURESCOURSE_INTERNAL_MAP_H
 

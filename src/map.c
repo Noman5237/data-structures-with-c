@@ -37,11 +37,10 @@ void t_map_deregister() {
 
 /* ============================== Map Item ========================= */
 
-Any *MapItem(Any *key, Any *value, Any *hash) {
+Any *MapItem(Any *key, Any *value) {
 	MapItemData *item = malloc(sizeof(MapItemData));
 	item->key = key;
 	item->value = value;
-	item->hash = hash;
 	let this = any_new(item, t_map_item);
 	return this;
 }
@@ -50,32 +49,29 @@ void map_item_data_destroy(Any *this) {
 	MapItemData *item = this->data;
 	any_destroy(item->key);
 	any_destroy(item->value);
-	any_destroy(item->hash);
 	free(item);
 }
 
 int map_item_data_compare(Any *this, Any *other) {
-	MapItemData *thisMap = this->data;
-	MapItemData *otherMap = other->data;
-	return any_compare(thisMap->hash, otherMap->hash);
+	MapItemData *thisItem = this->data;
+	MapItemData *otherItem = other->data;
+	return any_compare(thisItem->key, otherItem->key);
 }
 
 void map_item_data_print(Any *this) {
 	MapItemData *map = this->data;
 	printf("(");
 	any_print(map->key);
-	printf(", ");
+	printf(": ");
 	any_print(map->value);
 	printf(")");
 }
 
 /* ============================== Map Data ========================= */
 
-MapData *map_data_new(Any *iList, Any *(*hashFunction)(Any *key)) {
+MapData *map_data_new(Any *iList) {
 	MapData *map = malloc(sizeof(MapData));
 	map->list = iList;
-	map->computeHash = hashFunction;
-	map->size = 0;
 	return map;
 }
 
@@ -87,8 +83,8 @@ void map_data_destroy(Any *this) {
 
 /* ============================== Core Type Functions ========================= */
 
-Any *Map(Any *iList, Any *(*hashFunction)(Any *key)) {
-	MapData *map = map_data_new(iList, hashFunction);
+Any *Map(Any *iList) {
+	MapData *map = map_data_new(iList);
 	let this = any_new(map, t_map);
 	return this;
 }
@@ -102,28 +98,54 @@ void map_print(Any *this) {
 
 int map_size(Any *this) {
 	MapData *map = this->data;
-	return map->size;
+	return list_size(map->list);
 }
 
-void map_set(Any *this, Any *key, Any *value) {
+void map_put(Any *this, Any *key, Any *value) {
 	MapData *map = this->data;
-	let item = MapItem(key, value, map->computeHash(key));
-	list_append(map->list, item);
+	let item = MapItem(key, value);
+	MapItemData *itemData = map_getItem(map, key);
+	if (itemData == NULL) {
+		list_append(map->list, item);
+	} else {
+		any_destroy(itemData->value);
+		itemData->value = value;
+	}
 }
 
 Any *map_get(Any *this, Any *key) {
 	MapData *map = this->data;
-	let itemToSearch = MapItem(key, NULL, map->computeHash(key));
+	return map_getItem(map, key)->value;
+}
+
+Any *map_getKeys(Any *this) {
+	MapData *map = this->data;
+	let list = map->list;
+	IListInstance *iList = map->list->data;
+	let keys = iList->functions->new();
+	
+	for (int i = 0; i < map_size(this); i++) {
+		let key = ((MapItemData *) (list_get(list, i)->data))->key;
+		list_append(keys, key);
+	}
+	
+	return keys;
+}
+
+void map_remove(Any *this, Any *key) {
+	MapData *map = this->data;
+	let itemToRemove = MapItem(key, NULL);
+	list_removeItem(map->list, itemToRemove);
+}
+
+/* ============================== Helper Functions ========================= */
+
+MapItemData *map_getItem(MapData *map, Any *key) {
+	let itemToSearch = MapItem(key, NULL);
 	let item = list_search(map->list, itemToSearch);
 	if (item == NULL) {
 		return NULL;
 	}
 	MapItemData *itemData = item->data;
-	return itemData->value;
-}
-
-void map_remove(Any *this, Any *key) {
-	MapData *map = this->data;
-	let itemToRemove = MapItem(key, NULL, map->computeHash(key));
-	list_removeItem(map->list, itemToRemove);
+	return itemData;
 }
