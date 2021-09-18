@@ -4,7 +4,7 @@
  * @date: 4/22/2021; 2:48 PM
  */
 
-#include <dsCommon.h>
+#include <dscommon.h>
 
 typedef struct Student {
 	int last2DigitsId;

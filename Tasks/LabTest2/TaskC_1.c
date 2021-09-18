@@ -7,10 +7,14 @@
 void insertIntsInDescOrder(int *ints, int newInt) {
 	extern int noOfItems;
 	
-	int jr;
-	for (jr = noOfItems - 1; newInt > ints[jr] && jr > 0; --jr) {
+	int j;
+	for (j = 0; newInt < ints[j]; ++j) {
+		// empty block
+	}
+	
+	for (int jr = noOfItems; jr > j; jr--) {
 		ints[jr] = ints[jr - 1];
 	}
 	
-	ints[jr] = newInt;
+	ints[j] = newInt;
 }

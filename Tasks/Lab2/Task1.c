@@ -4,7 +4,7 @@
  * @date: 4/29/2021; 1:46 PM
  */
 
-#include <dsCommon.h>
+#include <dscommon.h>
 
 /**
  * Creates an array of ages from user input

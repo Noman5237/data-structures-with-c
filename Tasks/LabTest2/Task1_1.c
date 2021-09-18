@@ -4,28 +4,28 @@
  * @date: 6/10/2021; 3:47 PM
  */
  
-#include <doublyLinkedList.h>
+#include "doubleLinkedList.c"
 
-typedef DLL Queue;
+typedef struct List Queue;
 
 Queue *queue_create() {
-	return dll_create();
+	return list_create();
 }
 
 void queue_enqueue(int data, Queue *queue) {
-	dll_insertAtEnd(dll_node_create(data), queue);
+	list_insertAtEnd(node_create(data), queue);
 }
 
 void queue_dequeue(Queue *queue) {
-	dll_removeFromFront(queue);
+	list_removeFromFront(queue);
 }
 
 void queue_display(Queue *stack) {
-	dll_forward(stack);
+	list_forward(stack);
 }
 
 void queue_free(Queue *queue) {
-	dll_free(queue);
+	list_free(queue);
 }
 
 int main() {

@@ -4,7 +4,7 @@
  * @date: 7/1/2021; 3:12 PM
  */
 
-#include <binarySearchTree.h>
+#include <bst.h>
 
 int main() {
 	BST *tree = bst_create();

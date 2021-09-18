@@ -4,48 +4,49 @@
  * @date: 6/3/2021; 2:53 PM
  */
 
-#include <doublyLinkedList.h>
+#include <dscommon.h>
+#include <ll.h>
 
 int main() {
-	DLL_Node *newNode;
-	DLL list;
-	list.firstnode = NULL;
-	list.lastnode = NULL;
 	
-	newNode = dll_node_create(1);
-	dll_insertAtFront(newNode, &list);
-	newNode = dll_node_create(2);
-	dll_insertAtFront(newNode, &list);
-	newNode = dll_node_create(3);
-	dll_insertBefore(newNode, list.lastnode, &list);
-	newNode = dll_node_create(4);
-	dll_insertAfter(newNode, list.lastnode, &list);
-	newNode = dll_node_create(5);
-	dll_insertAfter(newNode, list.firstnode, &list);
-	newNode = dll_node_create(6);
-	dll_insertAtEnd(newNode, &list);
+	t_primitives_register();
+	t_ll_register();
 	
-	dll_forward(&list);
-	dll_backward(&list);
+	let list = LinkedList();
 	
-	dll_removeAt(2, &list);
-	dll_forward(&list);
+	ll_append(list, Int(1));
+	ll_insert(list, 0, Int(2));
+	ll_insert(list, ll_size(list) - 1, Int(3));
+	ll_append(list, Int(4));
+	ll_insert(list, 1, Int(5));
+	ll_append(list, Int(6));
 	
-	dll_removeAt(4, &list);
-	dll_forward(&list);
+	any_print(list);
 	
-	dll_removeAt(0, &list);
-	dll_forward(&list);
+	ll_remove(list, 2);
+	any_print(list);
 	
-	dll_removeAt(2, &list);
-	dll_forward(&list);
+	ll_remove(list, 4);
+	any_print(list);
 	
-	dll_removeFromEnd(&list);
-	dll_forward(&list);
+	ll_remove(list, 0);
+	any_print(list);
 	
-	dll_removeFromFront(&list);
-	dll_forward(&list);
+	ll_remove(list, 2);
+	any_print(list);
+	
+	ll_remove(list, ll_size(list) - 1);
+	any_print(list);
+	
+	ll_remove(list, 0);
+	any_print(list);
+	
+	any_destroy(list);
 	
 	printf("done");
+	
+	t_primitives_deregister();
+	t_ll_deregister();
+	
 	return 0;
 }
