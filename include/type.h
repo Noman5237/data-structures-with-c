@@ -80,6 +80,8 @@ typedef struct Type {
 	 * @param this the variable of whose memory and data needs to freed
 	 */
 	void (*destroyData)(Any *this);
+	
+	Any *(*add)(Any *this, Any *other);
 } Type;
 
 /**
@@ -148,7 +150,7 @@ char *any_type(Any *this);
  *
  * @return deep copy of the passed variable
  */
- 
+
 Any *any_clone(Any *this);
 
 /**
@@ -178,8 +180,10 @@ void any_print(Any *this);
  * @brief
  * Frees the memory occupied by instance of Any
  *
- * @param any pointer to Any instance
+ * @param this pointer to Any instance
  */
-void any_destroy(Any *any);
+void any_destroy(Any *this);
+
+Any *any_add(Any *this, Any *other);
 
 #endif //DATASTRUCTURESCOURSE_TYPE_H

@@ -1,5 +1,5 @@
 /**
- * @file: t_int.c
+ * @file: int.c
  * @author: Anonyman637
  * @date: 8/26/2021; 4:00 PM
  */
@@ -18,6 +18,7 @@ void t_int_register() {
 	t_int->compare = int_compare;
 	t_int->print = int_print;
 	t_int->destroyData = int_data_destroy;
+	t_int->add = int_add;
 }
 
 void t_int_deregister() {
@@ -38,7 +39,7 @@ Any *Int(int integer) {
 	return this;
 }
 
-inline int *int_data(Any *this) {
+int *int_data(Any *this) {
 	return (int *) this->data;
 }
 
@@ -59,4 +60,14 @@ void int_print(Any *this) {
 
 void int_data_destroy(Any *this) {
 	free(this->data);
+}
+
+Any *int_add(Any *this, Any *other) {
+	long long num1 = *(int *) this->data;
+	long long num2 = *(int *) other->data;
+	long long sum = num1 + num2;
+	if (sum > INT_MAX) {
+		sum = INT_MAX;
+	}
+	return Int((int) sum);
 }

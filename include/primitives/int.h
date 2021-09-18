@@ -29,4 +29,6 @@ int int_compare(Any *this, Any *other);
 
 void int_print(Any *this);
 
+Any *int_add(Any *this, Any *other);
+
 #endif //DATASTRUCTURESCOURSE_PRIMITIVE_INT_H

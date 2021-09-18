@@ -45,3 +45,7 @@ void any_destroy(Any *this) {
 	this->type->destroyData(this);
 	free(this);
 }
+
+Any *any_add(Any *this, Any *other) {
+	return this->type->add(this, other);
+}
