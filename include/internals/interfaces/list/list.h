@@ -16,6 +16,8 @@ typedef struct IListInstance IListInstance;
 typedef struct IList IList;
 
 struct IList {
+	Any *(*new)();
+	
 	void (*print)(Any *this);
 	
 	int (*size)(Any *this);

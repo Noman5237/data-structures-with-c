@@ -39,6 +39,7 @@ void IList_LinkedListDestroy(IListInstance *instance) {
 
 void i_list_ll_functions_new() {
 	i_list_ll = malloc(sizeof(IList));
+	i_list_ll->new = IList_LinkedList;
 	i_list_ll->print = ll_print;
 	i_list_ll->size = ll_size;
 	i_list_ll->isEmpty = ll_isEmpty;
@@ -48,5 +49,6 @@ void i_list_ll_functions_new() {
 	i_list_ll->set = ll_set;
 	i_list_ll->remove = ll_remove;
 	i_list_ll->getIndexOf = ll_getIndexOf;
+	i_list_ll->search = ll_search;
 	i_list_ll->destroy = IList_LinkedListDestroy;
 }

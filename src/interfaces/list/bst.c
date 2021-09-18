@@ -39,6 +39,7 @@ void IList_BSTDestroy(IListInstance *instance) {
 
 void i_list_bst_functions_new() {
 	i_list_bst = malloc(sizeof(IList));
+	i_list_bst->new = IList_BinarySearchTree;
 	i_list_bst->print = bst_print;
 	i_list_bst->size = bst_size;
 	i_list_bst->isEmpty = bst_isEmpty;
