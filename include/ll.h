@@ -59,4 +59,6 @@ void ll_remove(Any *this, int index);
 
 int ll_getIndexOf(Any *this, Any *itemToSearch);
 
+Any *ll_search(Any *this, Any *itemToSearch);
+
 #endif //DATASTRUCTURESCOURSE_LL_H

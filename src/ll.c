@@ -168,6 +168,20 @@ int ll_getIndexOf(Any *this, Any *itemToSearch) {
 	return -1;
 }
 
+Any *ll_search(Any *this, Any *itemToSearch) {
+	LLNode *current = ll_data(this)->head;
+	
+	while (current != NULL) {
+		if (any_compare(current->datum, itemToSearch) == 0) {
+			return current->datum;
+		}
+		
+		current = current->next;
+	}
+	
+	return NULL;
+}
+
 /* ============================== Helper Function ========================= */
 
 inline LLData *ll_data(Any *this) {
