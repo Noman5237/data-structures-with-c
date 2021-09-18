@@ -40,7 +40,15 @@ add_executable(L12T2 Lab12/Task2.c)
 target_link_libraries(L12T2 bst)
 
 add_executable(L13T1 Lab13/Task1.c)
-target_link_libraries(L13T1 graph)
+target_link_libraries(L13T1 map ll stack queue ilistbst primitivetypes)
+
+add_executable(L13T2 Lab13/Task2.c)
+target_link_libraries(L13T2 map ll stack queue ilistbst primitivetypes)
+
+add_executable(L13T3 Lab13/Task3.c)
+target_link_libraries(L13T3 map ll stack queue ilistbst primitivetypes)
+
+add_executable(L14T1 Lab14/Task1.c)
 
 # ================================================== LAB TESTS ================================================== #
 
