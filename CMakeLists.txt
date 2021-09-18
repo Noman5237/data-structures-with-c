@@ -29,7 +29,8 @@ target_link_libraries(ilist type)
 include_directories(include)
 
 add_library(type src/type.c)
-add_library(primitivetypes src/primitives/int.c)
+
+add_library(primitivetypes src/primitives/int.c src/primitives/string.c)
 target_link_libraries(primitivetypes type)
 
 add_library(ll src/ll.c)

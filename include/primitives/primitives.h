@@ -6,11 +6,14 @@
 #define DATASTRUCTURESCOURSE_PRIMITIVES_H
 
 #include "int.h"
+#include "string.h"
 
 #define t_primitives_register() \
-    t_int_register()
+    t_int_register();   \
+    t_string_register()
 
 #define t_primitives_deregister() \
-	t_int_deregister()
+    t_int_deregister(); \
+    t_string_deregister()
 
 #endif //DATASTRUCTURESCOURSE_PRIMITIVES_H
